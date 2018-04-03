@@ -156,7 +156,7 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
 /// de chargement de fichiers par exemple.
 /// Bien sûr on ne veut pas que vos graphes soient construits
 /// "à la main" dans le code comme ça.
-void Graph::make_example()
+/*void Graph::make_example()
 {
     m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
     // La ligne précédente est en gros équivalente à :
@@ -172,8 +172,8 @@ void Graph::make_example()
     add_interfaced_vertex(5,  0.0, 100, 500, "bad_clowns_xx3xx.jpg", 0);
     add_interfaced_vertex(6,  0.0, 300, 500, "bad_clowns_xx3xx.jpg", 1);
     add_interfaced_vertex(7,  0.0, 500, 500, "bad_clowns_xx3xx.jpg", 2);
-    add_interfaced_vertex(10, 30.0, 300, 100, "clown1.jpg");
-    add_interfaced_vertex(123, 30.0, 250, 100, "clown1.jpg");
+    add_interfaced_vertex(8, 30.0, 300, 100, "clown1.jpg");
+    add_interfaced_vertex(9, 30.0, 250, 100, "clown1.jpg");
 
     /// Les arcs doivent être définis entre des sommets qui existent !
     // AJouter l'arc d'indice 0, allant du sommet 1 au sommet 2 de poids 50 etc...
@@ -187,7 +187,64 @@ void Graph::make_example()
     add_interfaced_edge(7, 2, 0, 100.0);
     add_interfaced_edge(8, 5, 2, 20.0);
     add_interfaced_edge(9, 3, 7, 80.0);
+}*/
+
+///Méthode pour lire les fichiers et le load dans les différents conteneurs
+void Graph::load_graph(int fic)
+{
+    std::string fic_name;
+    int ordre;
+
+    if(fic==1)
+    {
+        fic_name ="savane.txt";
+        m_ordre = 5;
+    }
+    else if(fic==2)
+    {
+
+    }
+    else if(fic==3)
+    {
+
+    }
+    else
+    {
+        std::cout << "erreur fatale";
+        exit(1);
+    }
+
+    for(int i(0);i<m_ordre; i++)
+    {
+        m_matP.pushback(std::vector<int>);
+    }
+
+
+
+    //std::cout<< fic_name;
+
+    ifstream fichier(fic_name.c_str(), ios::in);
+
+    if(!fichier)  // si l'ouverture echoue
+    {
+        std::cout << "Erreur à l'ouverture de la matrice d'adjacence !" << endl;
+    }
+
+    For(int i(0);i<m_ordre ; i++)
+    {
+        For(int j(0);j<m_ordre ; j++)
+        {
+            fichier <<  m_matAd[i][j];
+        }
+    }
 }
+
+void Graph::show_graph_console()
+{
+
+
+}
+
 
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
 void Graph::update()

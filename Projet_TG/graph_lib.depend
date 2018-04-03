@@ -109,13 +109,13 @@
 	<iostream>
 	"graph.h"
 
-1522730876 source:\\vmware-host\shared folders\bureau\ece-projetgi-master\ece-projetgi-master\projet_tg\grman\coords.cpp
+1522575070 source:c:\users\théo mercier\documents\allegro\projet_tg_2\grman\coords.cpp
 	"coords.h"
 
-1522730876 \\vmware-host\shared folders\bureau\ece-projetgi-master\ece-projetgi-master\projet_tg\grman\coords.h
+1522575426 c:\users\théo mercier\documents\allegro\projet_tg_2\grman\coords.h
 	<cmath>
 
-1522730876 source:\\vmware-host\shared folders\bureau\ece-projetgi-master\ece-projetgi-master\projet_tg\grman\grman.cpp
+1522515824 source:c:\users\théo mercier\documents\allegro\projet_tg_2\grman\grman.cpp
 	<cmath>
 	<unordered_map>
 	<unordered_set>
@@ -129,16 +129,16 @@
 	<loadpng.h>
 	<jpgalleg.h>
 
-1522730876 \\vmware-host\shared folders\bureau\ece-projetgi-master\ece-projetgi-master\projet_tg\grman\grman.h
+1522539042 c:\users\théo mercier\documents\allegro\projet_tg_2\grman\grman.h
 	<allegro.h>
 	<string>
 	"grman_couleurs.h"
 	"coords.h"
 	"widget.h"
 
-1522730876 \\vmware-host\shared folders\bureau\ece-projetgi-master\ece-projetgi-master\projet_tg\grman\grman_couleurs.h
+1509222374 c:\users\théo mercier\documents\allegro\projet_tg_2\grman\grman_couleurs.h
 
-1522730876 \\vmware-host\shared folders\bureau\ece-projetgi-master\ece-projetgi-master\projet_tg\grman\widget.h
+1522636618 c:\users\théo mercier\documents\allegro\projet_tg_2\grman\widget.h
 	"grman.h"
 	<iostream>
 	<string>
@@ -146,18 +146,23 @@
 	<algorithm>
 	<allegro.h>
 
-1522730876 source:\\vmware-host\shared folders\bureau\ece-projetgi-master\ece-projetgi-master\projet_tg\grman\widget.cpp
+1522636920 source:c:\users\théo mercier\documents\allegro\projet_tg_2\grman\widget.cpp
 	"widget.h"
 
-1522730876 source:\\vmware-host\shared folders\bureau\ece-projetgi-master\ece-projetgi-master\projet_tg\main.cpp
+1522771240 source:c:\users\théo mercier\documents\allegro\projet_tg_2\main.cpp
 	"grman/grman.h"
 	<iostream>
+	<string.h>
 	"graph.h"
 
-1522730876 \\vmware-host\shared folders\bureau\ece-projetgi-master\ece-projetgi-master\projet_tg\graph.h
+1522785458 c:\users\théo mercier\documents\allegro\projet_tg_2\graph.h
 	<vector>
 	<map>
 	<string>
 	<memory>
+	<fstream>
 	"grman/grman.h"
+
+1522771160 source:c:\users\théo mercier\documents\allegro\projet_tg_2\graph.cpp
+	"graph.h"
 

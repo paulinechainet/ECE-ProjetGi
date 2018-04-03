@@ -75,6 +75,7 @@
 #include <map>
 #include <string>
 #include <memory>
+#include <fstream>
 
 #include "grman/grman.h"
 
@@ -279,6 +280,11 @@ class Graph
 {
     private :
 
+        ///matrice pondérée
+        std::vector<std::vector<int>> m_matP;
+
+        int m_ordre;
+
         /// La "liste" des arêtes
         std::map<int, Edge> m_edges;
 
@@ -303,7 +309,11 @@ class Graph
         /// Voir implémentation dans le .cpp
         /// Cette méthode est à enlever et remplacer par un système
         /// de chargement de fichiers par exemple.
-        void make_example();
+        //void make_example();
+
+        void load_graph(int fic);
+
+        void show_graph_console();
 
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
