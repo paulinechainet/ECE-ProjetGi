@@ -1,0 +1,111 @@
+# depslib dependency file v1.0
+1522761724 source:c:\users\théo mercier\documents\allegro\graph_lib_exemple_graph\graph.cpp
+	"graph.h"
+
+1522656090 c:\users\théo mercier\documents\allegro\graph_lib_exemple_graph\graph.h
+	<vector>
+	<map>
+	<string>
+	<memory>
+	"grman/grman.h"
+
+1522539042 c:\users\théo mercier\documents\allegro\graph_lib_exemple_graph\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1509222374 c:\users\théo mercier\documents\allegro\graph_lib_exemple_graph\grman\grman_couleurs.h
+
+1522575426 c:\users\théo mercier\documents\allegro\graph_lib_exemple_graph\grman\coords.h
+	<cmath>
+
+1522636618 c:\users\théo mercier\documents\allegro\graph_lib_exemple_graph\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1522575070 source:c:\users\théo mercier\documents\allegro\graph_lib_exemple_graph\grman\coords.cpp
+	"coords.h"
+
+1522515824 source:c:\users\théo mercier\documents\allegro\graph_lib_exemple_graph\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1522636920 source:c:\users\théo mercier\documents\allegro\graph_lib_exemple_graph\grman\widget.cpp
+	"widget.h"
+
+1522657076 source:c:\users\théo mercier\documents\allegro\graph_lib_exemple_graph\main.cpp
+	"grman/grman.h"
+	<iostream>
+	"graph.h"
+
+1522761724 source:c:\users\théo mercier\documents\allegro\projet_tg\graph.cpp
+	"graph.h"
+
+1522656090 c:\users\théo mercier\documents\allegro\projet_tg\graph.h
+	<vector>
+	<map>
+	<string>
+	<memory>
+	"grman/grman.h"
+
+1522539042 c:\users\théo mercier\documents\allegro\projet_tg\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1509222374 c:\users\théo mercier\documents\allegro\projet_tg\grman\grman_couleurs.h
+
+1522575426 c:\users\théo mercier\documents\allegro\projet_tg\grman\coords.h
+	<cmath>
+
+1522636618 c:\users\théo mercier\documents\allegro\projet_tg\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1522575070 source:c:\users\théo mercier\documents\allegro\projet_tg\grman\coords.cpp
+	"coords.h"
+
+1522515824 source:c:\users\théo mercier\documents\allegro\projet_tg\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1522636920 source:c:\users\théo mercier\documents\allegro\projet_tg\grman\widget.cpp
+	"widget.h"
+
+1522657076 source:c:\users\théo mercier\documents\allegro\projet_tg\main.cpp
+	"grman/grman.h"
+	<iostream>
+	"graph.h"
+
