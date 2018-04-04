@@ -29,7 +29,14 @@ int main()
     //g.show_graph_consolePOP();
 
     g.add_vertex();
-    g.display_vertices();
+    //g.display_vertices();
+
+
+    g.add_edge();
+    //g.display_edges();
+
+
+
 
 
 

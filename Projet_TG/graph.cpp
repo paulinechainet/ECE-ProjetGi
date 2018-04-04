@@ -130,6 +130,10 @@ void Edge::post_update()
     m_weight = m_interface->m_slider_weight.get_value();
 }
 
+void Edge::display_edge()
+{
+    std::cout << m_from << " " << m_to << " " << m_weight << std::endl;
+}
 
 
 /***************************************************
@@ -322,11 +326,30 @@ void Graph::display_vertices()
 ///ajout des arretes
 void Graph::add_edge()
 {
-
-
-
-
+    //vector <int> coeff_edge;
+    for (int i(0);i<m_ordre;i++) ///Création Indice de add_arrete
+    {
+        for (int j(0);j<m_ordre;j++)
+        {
+            if (m_matP[i][j]!=0)
+            {
+                m_edges[m_nbedges]= Edge(i, j, m_matP[i][j]);
+                m_nbedges++;
+            }
+        }
+    }
 }
+
+///Affichage des arretes
+void Graph::display_edges()
+{
+    for(int i(0); i<15;i++)
+    {
+        std::cout<< m_nbedges<<std::endl;
+        m_edges[i].display_edge();
+    }
+}
+
 
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
 void Graph::update()
@@ -383,6 +406,6 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
 
     EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]);
     m_interface->m_main_box.add_child(ei->m_top_edge);
-    m_edges[idx] = Edge(weight, ei);
+    m_edges[idx] = Edge(0, 0, weight, ei);
 }
 

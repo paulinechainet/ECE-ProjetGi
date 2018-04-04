@@ -237,7 +237,7 @@ class Edge
 
         /// Les constructeurs sont à compléter selon vos besoin...
         /// Ici on ne donne qu'un seul constructeur qui peut utiliser une interface
-        Edge (double weight=0, EdgeInterface *interface=nullptr) :
+        Edge (int from=0, int to=0, double weight=0, EdgeInterface *interface=nullptr) : m_from(from), m_to(to),
             m_weight(weight), m_interface(interface)  {  }
 
         /// Edge étant géré par Graph ce sera la méthode update de graph qui appellera
@@ -245,6 +245,8 @@ class Edge
         /// Voir l'implémentation Graph::update dans le .cpp
         void pre_update();
         void post_update();
+
+        void display_edge();
 };
 
 
@@ -289,6 +291,8 @@ class Graph
 {
     private :
 
+        int m_nbedges;
+
         ///matrice pondérée
         std::vector<std::vector<int>> m_matP;
 
@@ -313,7 +317,10 @@ class Graph
         /// Les constructeurs sont à compléter selon vos besoin...
         /// Ici on ne donne qu'un seul constructeur qui peut utiliser une interface
         Graph (GraphInterface *interface=nullptr) :
-            m_interface(interface)  {  }
+           m_nbedges(0), m_interface(interface)
+            {
+             //   m_nbedges=0;
+            }
 
         void add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name="", int pic_idx=0 );
         void add_interfaced_edge(int idx, int vert1, int vert2, double weight=0);
@@ -342,7 +349,7 @@ class Graph
 
         ///
         void display_vertices();
-
+        void display_edges();
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
         void update();
