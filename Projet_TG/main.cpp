@@ -22,10 +22,14 @@ int main()
     Graph g;
 
     g.load_graph(path_Matrice);
-    g.show_graph_console();
+    //g.show_graph_console();
 
     g.load_graphPOP(path_Matrice);
-    g.show_graph_consolePOP();
+    //g.show_graph_consolePOP();
+
+    g.add_vertex();
+
+
 
     /// Vous gardez la main sur la "boucle de jeu"
     /// ( contrairement à des frameworks plus avancés )

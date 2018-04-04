@@ -133,11 +133,14 @@ class Vertex
     friend class EdgeInterface;
 
     private :
-        /// liste des indices des arcs arrivant au sommet : accès aux prédécesseurs
+        /*/// liste des indices des arcs arrivant au sommet : accès aux prédécesseurs
         std::vector<int> m_in;
 
         /// liste des indices des arcs partant du sommet : accès aux successeurs
-        std::vector<int> m_out;
+        std::vector<int> m_out;*/
+
+        ///
+        int m_indice_sommet;
 
         ///
         int m_value;
@@ -158,7 +161,7 @@ class Vertex
 
         /// Les constructeurs sont à compléter selon vos besoin...
         /// Ici on ne donne qu'un seul constructeur qui peut utiliser une interface
-        Vertex (int pop =0 , double value=0, VertexInterface *interface=nullptr) : m_pop(pop),
+        Vertex (int indice_sommet=0, int pop =0 , double value=0, VertexInterface *interface=nullptr) : m_indice_sommet(indice_sommet), m_pop(pop),
             m_value(value), m_interface(interface)  {  }
 
         /// Vertex étant géré par Graph ce sera la méthode update de graph qui appellera
@@ -335,6 +338,8 @@ class Graph
         void add_vertex();
         void add_edge();
 
+        ///
+        void display_vertex();
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
         void update();
 };

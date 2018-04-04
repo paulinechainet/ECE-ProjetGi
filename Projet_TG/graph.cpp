@@ -301,7 +301,10 @@ void Graph::show_graph_consolePOP()
 ///Ajout des sommets
 void Graph::add_vertex()
 {
-
+    for(int i(0);i<m_ordre;i++)
+    {
+        m_vertices[i]=Vertex(i,m_matPOP[i],0);
+    }
 }
 
 ///ajout des arretes
@@ -348,7 +351,7 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
     // Ajout de la top box de l'interface de sommet
     m_interface->m_main_box.add_child(vi->m_top_box);
     // On peut ajouter directement des vertices dans la map avec la notation crochet :
-    m_vertices[idx] = Vertex(0,value, vi);
+    m_vertices[idx] = Vertex(0,0,value, vi);
 }
 
 /// Aide à l'ajout d'arcs interfacés
