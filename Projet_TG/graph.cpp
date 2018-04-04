@@ -197,7 +197,6 @@ void Graph::make_example()
     add_interfaced_edge(9, 3, 7, 80.0);
 }
 
-
 void Graph::displayAlleg(int path)
 {
     std::string pathfolder,pathpic;
@@ -222,8 +221,22 @@ void Graph::displayAlleg(int path)
         pathpic= pathfolder +std::to_string(i)+ ".jpg";
         add_interfaced_vertex(i,m_matPOP[i],100+(i*20),100+(i*20),pathpic);
     }
-}
 
+    for (int i(0);i<m_ordre;i++)
+    {
+        for (int j(0);j<m_ordre;j++)
+        {
+            if (m_matP[i][j]!=0)
+            {
+                add_interfaced_edge(m_nbedges,i,j,m_matP[i][j]);
+                //m_edges[m_nbedges]= Edge(i, j, m_matP[i][j]);
+                m_nbedges++;
+            }
+        }
+    }
+
+
+}
 
 ///Méthode pour lire les fichiers et le load dans les différents conteneurs
 void Graph::load_graph(int fic)

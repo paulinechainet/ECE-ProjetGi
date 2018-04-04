@@ -15,30 +15,28 @@
 			<Cursor1 position="2644" topLine="70" />
 		</Cursor>
 	</File>
-	<File name="graph.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="8546" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="46" />
-			<Collapse line="60" />
-			<Collapse line="69" />
-			<Collapse line="80" />
-			<Collapse line="111" />
-			<Collapse line="124" />
-			<Collapse line="133" />
-			<Collapse line="145" />
-			<Collapse line="201" />
-			<Collapse line="229" />
-			<Collapse line="347" />
-			<Collapse line="356" />
-			<Collapse line="373" />
-			<Collapse line="382" />
-		</Folding>
-	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="936" topLine="29" />
+			<Cursor1 position="968" topLine="40" />
 		</Cursor>
+	</File>
+	<File name="graph.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8751" topLine="170" />
+		</Cursor>
+		<Folding>
+			<Collapse line="145" />
+			<Collapse line="167" />
+			<Collapse line="242" />
+			<Collapse line="290" />
+			<Collapse line="303" />
+			<Collapse line="342" />
+			<Collapse line="351" />
+			<Collapse line="360" />
+			<Collapse line="369" />
+			<Collapse line="386" />
+			<Collapse line="395" />
+			<Collapse line="416" />
+		</Folding>
 	</File>
 </CodeBlocks_layout_file>

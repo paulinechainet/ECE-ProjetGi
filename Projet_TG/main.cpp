@@ -40,12 +40,14 @@ int main()
     std::cout <<std::endl;
     std::cout <<std::endl;
 
-    g.add_edge();
-    g.display_edges();
+    //g.add_edge();
+    //g.display_edges();
 
     //g.make_example();
     g.displayAlleg(path_Matrice);
 
+    g.display_edges();
+    g.display_vertices();
 
 
     /// Vous gardez la main sur la "boucle de jeu"
