@@ -66,6 +66,10 @@ void Vertex::post_update()
     m_value = m_interface->m_slider_value.get_value();
 }
 
+void Vertex::displayVertex()
+{
+    std::cout<<m_indice_sommet << " " << m_value <<" " <<m_pop<<" "<<std::endl;
+}
 
 
 /***************************************************
@@ -304,6 +308,14 @@ void Graph::add_vertex()
     for(int i(0);i<m_ordre;i++)
     {
         m_vertices[i]=Vertex(i,m_matPOP[i],0);
+    }
+}
+
+void Graph::display_vertices()
+{
+    for(int i(0); i<m_ordre;i++)
+    {
+        m_vertices[i].displayVertex();
     }
 }
 

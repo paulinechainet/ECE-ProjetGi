@@ -5,6 +5,7 @@
 #include "graph.h"
 
 
+
 int main()
 {
     int path_Matrice;
@@ -28,6 +29,7 @@ int main()
     //g.show_graph_consolePOP();
 
     g.add_vertex();
+    g.display_vertices();
 
 
 

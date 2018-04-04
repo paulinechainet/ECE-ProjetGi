@@ -169,6 +169,8 @@ class Vertex
         /// Voir l'implémentation Graph::update dans le .cpp
         void pre_update();
         void post_update();
+
+        void displayVertex();
 };
 
 
@@ -339,7 +341,9 @@ class Graph
         void add_edge();
 
         ///
-        void display_vertex();
+        void display_vertices();
+
+
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
         void update();
 };
