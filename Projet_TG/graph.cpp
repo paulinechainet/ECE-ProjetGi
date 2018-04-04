@@ -197,6 +197,34 @@ void Graph::make_example()
     add_interfaced_edge(9, 3, 7, 80.0);
 }
 
+
+void Graph::displayAlleg(int path)
+{
+    std::string pathfolder,pathpic;
+
+    m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
+
+    if(path==1)
+    {
+        pathfolder="picssavane/";
+    }
+    else if(path==2)
+    {
+
+    }
+    else if(path==3)
+    {
+
+    }
+
+    for(int i(0);i<m_ordre;i++)
+    {
+        pathpic= pathfolder +std::to_string(i)+ ".jpg";
+        add_interfaced_vertex(i,m_matPOP[i],100+(i*20),100+(i*20),pathpic);
+    }
+}
+
+
 ///Méthode pour lire les fichiers et le load dans les différents conteneurs
 void Graph::load_graph(int fic)
 {
@@ -374,17 +402,20 @@ void Graph::update()
 /// Aide à l'ajout de sommets interfacés
 void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name, int pic_idx )
 {
+
     if ( m_vertices.find(idx)!=m_vertices.end() )
     {
         std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
         throw "Error adding vertex";
     }
+    std::cout<<idx<<std::endl;
+
     // Création d'une interface de sommet
     VertexInterface *vi = new VertexInterface(idx, x, y, pic_name, pic_idx);
     // Ajout de la top box de l'interface de sommet
     m_interface->m_main_box.add_child(vi->m_top_box);
     // On peut ajouter directement des vertices dans la map avec la notation crochet :
-    m_vertices[idx] = Vertex(0,0,value, vi);
+    m_vertices[idx] = Vertex(idx,0,value, vi);
 }
 
 /// Aide à l'ajout d'arcs interfacés

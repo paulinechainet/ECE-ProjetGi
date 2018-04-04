@@ -34,14 +34,17 @@ int main()
     std::cout <<std::endl;
     std::cout <<std::endl;
 
-    g.add_vertex();
-    g.display_vertices();
+    //g.add_vertex();
+    //g.display_vertices();
 
     std::cout <<std::endl;
     std::cout <<std::endl;
 
     g.add_edge();
     g.display_edges();
+
+    //g.make_example();
+    g.displayAlleg(path_Matrice);
 
 
 
