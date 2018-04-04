@@ -156,7 +156,7 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
 /// de chargement de fichiers par exemple.
 /// Bien sûr on ne veut pas que vos graphes soient construits
 /// "à la main" dans le code comme ça.
-/*void Graph::make_example()
+void Graph::make_example()
 {
     m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
     // La ligne précédente est en gros équivalente à :
@@ -187,16 +187,17 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     add_interfaced_edge(7, 2, 0, 100.0);
     add_interfaced_edge(8, 5, 2, 20.0);
     add_interfaced_edge(9, 3, 7, 80.0);
-}*/
+}
 
 ///Méthode pour lire les fichiers et le load dans les différents conteneurs
 void Graph::load_graph(int fic)
 {
     std::string fic_name;
+    std::vector<int> temp(m_ordre,0);
 
     if(fic==1)
     {
-        fic_name ="\\Matrice_P\\savane.txt";
+        fic_name ="Matrice_P/savane.txt";
         m_ordre = 5;
     }
     else if(fic==2)
@@ -213,14 +214,12 @@ void Graph::load_graph(int fic)
         exit(1);
     }
 
-    std::vector<int> temp(m_ordre,0);
-
     for(int i(0);i<m_ordre; i++)
     {
         m_matP.push_back(temp);
     }
 
-    std::ifstream fichier("Matrice_P/savane.txt", std::ios::in);
+    std::ifstream fichier(fic_name, std::ios::in);
 
     if(!fichier.is_open())  // si l'ouverture echoue
     {
@@ -234,8 +233,11 @@ void Graph::load_graph(int fic)
             fichier >>  m_matP[i][j];
         }
     }
+
+    fichier.close();
 }
 
+///affichage du graph en console
 void Graph::show_graph_console()
 {
     for(int i(0);i<m_ordre ; i++)
@@ -246,9 +248,70 @@ void Graph::show_graph_console()
         }
         std::cout<<std::endl;
     }
+}
+
+///chargement du graph population
+void Graph::load_graphPOP(int fic)
+{
+    std::string fic_name;
+    int temp;
+
+     if(fic==1)
+     {
+         fic_name ="Population/savane.txt";
+     }
+     else if(fic==2)
+     {
+
+     }
+     else if(fic==3)
+     {
+
+     }
+     else
+     {
+         std::cout << "erreur fatale";
+         exit(1);
+     }
+
+    std::ifstream fichier(fic_name, std::ios::in);
+
+    if(!fichier.is_open())  // si l'ouverture echoue
+    {
+        std::cout << "Erreur à l'ouverture du tableau des populations !" << std::endl;
+    }
+
+    for(int i(0); i<m_ordre ; i++)
+    {
+        fichier >>  temp;
+        m_matPOP.push_back(temp);
+    }
+    fichier.close();
+}
+
+///affichage graph pop en console
+void Graph::show_graph_consolePOP()
+{
+    for(int i(0); i<m_ordre ; i++)
+    {
+        std::cout<< m_matPOP[i]<<" ";
+    }
+}
+
+///Ajout des sommets
+void Graph::add_vertex()
+{
 
 }
 
+///ajout des arretes
+void Graph::add_edge()
+{
+
+
+
+
+}
 
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
 void Graph::update()
@@ -285,7 +348,7 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
     // Ajout de la top box de l'interface de sommet
     m_interface->m_main_box.add_child(vi->m_top_box);
     // On peut ajouter directement des vertices dans la map avec la notation crochet :
-    m_vertices[idx] = Vertex(value, vi);
+    m_vertices[idx] = Vertex(0,value, vi);
 }
 
 /// Aide à l'ajout d'arcs interfacés

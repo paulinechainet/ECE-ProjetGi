@@ -139,8 +139,12 @@ class Vertex
         /// liste des indices des arcs partant du sommet : accès aux successeurs
         std::vector<int> m_out;
 
-        /// un exemple de donnée associée à l'arc, on peut en ajouter d'autres...
-        double m_value;
+        ///
+        int m_value;
+
+        /// Nombre d'individu
+        int m_pop;
+
 
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<VertexInterface> m_interface = nullptr;
@@ -154,7 +158,7 @@ class Vertex
 
         /// Les constructeurs sont à compléter selon vos besoin...
         /// Ici on ne donne qu'un seul constructeur qui peut utiliser une interface
-        Vertex (double value=0, VertexInterface *interface=nullptr) :
+        Vertex (int pop =0 , double value=0, VertexInterface *interface=nullptr) : m_pop(pop),
             m_value(value), m_interface(interface)  {  }
 
         /// Vertex étant géré par Graph ce sera la méthode update de graph qui appellera
@@ -217,8 +221,8 @@ class Edge
         /// indice du sommet d'arrivée de l'arc
         int m_to;
 
-        /// un exemple de donnée associée à l'arc, on peut en ajouter d'autres...
-        double m_weight;
+        ///
+        float m_weight;
 
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<EdgeInterface> m_interface = nullptr;
@@ -313,12 +317,23 @@ class Graph
         /// Voir implémentation dans le .cpp
         /// Cette méthode est à enlever et remplacer par un système
         /// de chargement de fichiers par exemple.
-        //void make_example();
+        void make_example();
 
+        ///load la matrice ponddéré dans m_matP
         void load_graph(int fic);
 
+        ///chargement matrice de pop
+        void load_graphPOP(int fic);
+
+        ///affiche m_matP
         void show_graph_console();
 
+        ///affiche m_matPop
+        void show_graph_consolePOP();
+
+        ///Methode pour ajouter les ssommets et arretes a partir de m_matP et m_matPop
+        void add_vertex();
+        void add_edge();
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
         void update();

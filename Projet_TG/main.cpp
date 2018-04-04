@@ -24,11 +24,8 @@ int main()
     g.load_graph(path_Matrice);
     g.show_graph_console();
 
-
-
-
-    //g.make_example();
-
+    g.load_graphPOP(path_Matrice);
+    g.show_graph_consolePOP();
 
     /// Vous gardez la main sur la "boucle de jeu"
     /// ( contrairement à des frameworks plus avancés )
