@@ -22,6 +22,7 @@ int main()
     Graph g;
 
     g.load_graph(path_Matrice);
+    g.show_graph_console();
 
 
 

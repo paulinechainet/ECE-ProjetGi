@@ -166,3 +166,114 @@
 1522771160 source:c:\users\théo mercier\documents\allegro\projet_tg_2\graph.cpp
 	"graph.h"
 
+1522575070 source:c:\users\théo mercier\documents\allegro\projet_tg_3\grman\coords.cpp
+	"coords.h"
+
+1522575426 c:\users\théo mercier\documents\allegro\projet_tg_3\grman\coords.h
+	<cmath>
+
+1522515824 source:c:\users\théo mercier\documents\allegro\projet_tg_3\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1522539042 c:\users\théo mercier\documents\allegro\projet_tg_3\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1509222374 c:\users\théo mercier\documents\allegro\projet_tg_3\grman\grman_couleurs.h
+
+1522636618 c:\users\théo mercier\documents\allegro\projet_tg_3\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1522636920 source:c:\users\théo mercier\documents\allegro\projet_tg_3\grman\widget.cpp
+	"widget.h"
+
+1522771240 source:c:\users\théo mercier\documents\allegro\projet_tg_3\main.cpp
+	"grman/grman.h"
+	<iostream>
+	<string.h>
+	"graph.h"
+
+1522833359 c:\users\théo mercier\documents\allegro\projet_tg_3\graph.h
+	<vector>
+	<map>
+	<string>
+	<memory>
+	<fstream>
+	"grman/grman.h"
+
+1522835277 source:c:\users\théo mercier\documents\allegro\projet_tg_3\graph.cpp
+	"graph.h"
+
+1522575070 source:c:\users\théo mercier\documents\allegro\projet_tg_4\grman\coords.cpp
+	"coords.h"
+
+1522575426 c:\users\théo mercier\documents\allegro\projet_tg_4\grman\coords.h
+	<cmath>
+
+1522515824 source:c:\users\théo mercier\documents\allegro\projet_tg_4\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1522539042 c:\users\théo mercier\documents\allegro\projet_tg_4\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1509222374 c:\users\théo mercier\documents\allegro\projet_tg_4\grman\grman_couleurs.h
+
+1522636618 c:\users\théo mercier\documents\allegro\projet_tg_4\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1522636920 source:c:\users\théo mercier\documents\allegro\projet_tg_4\grman\widget.cpp
+	"widget.h"
+
+1522835579 source:c:\users\théo mercier\documents\allegro\projet_tg_4\main.cpp
+	"grman/grman.h"
+	<iostream>
+	<string.h>
+	"graph.h"
+
+1522836164 c:\users\théo mercier\documents\allegro\projet_tg_4\graph.h
+	<vector>
+	<map>
+	<string>
+	<memory>
+	<fstream>
+	"grman/grman.h"
+

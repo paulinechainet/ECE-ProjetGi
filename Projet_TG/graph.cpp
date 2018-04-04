@@ -193,11 +193,10 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
 void Graph::load_graph(int fic)
 {
     std::string fic_name;
-    int ordre;
 
     if(fic==1)
     {
-        fic_name ="savane.txt";
+        fic_name ="\\Matrice_P\\savane.txt";
         m_ordre = 5;
     }
     else if(fic==2)
@@ -214,34 +213,39 @@ void Graph::load_graph(int fic)
         exit(1);
     }
 
+    std::vector<int> temp(m_ordre,0);
+
     for(int i(0);i<m_ordre; i++)
     {
-        m_matP.pushback(std::vector<int>);
+        m_matP.push_back(temp);
     }
 
+    std::ifstream fichier("Matrice_P/savane.txt", std::ios::in);
 
-
-    //std::cout<< fic_name;
-
-    ifstream fichier(fic_name.c_str(), ios::in);
-
-    if(!fichier)  // si l'ouverture echoue
+    if(!fichier.is_open())  // si l'ouverture echoue
     {
-        std::cout << "Erreur à l'ouverture de la matrice d'adjacence !" << endl;
+        std::cout << "Erreur à l'ouverture de la matrice d'adjacence !" << std::endl;
     }
 
-    For(int i(0);i<m_ordre ; i++)
+    for(int i(0);i<m_ordre ; i++)
     {
-        For(int j(0);j<m_ordre ; j++)
+        for(int j(0);j<m_ordre ; j++)
         {
-            fichier <<  m_matAd[i][j];
+            fichier >>  m_matP[i][j];
         }
     }
 }
 
 void Graph::show_graph_console()
 {
-
+    for(int i(0);i<m_ordre ; i++)
+    {
+        for(int j(0);j<m_ordre ; j++)
+        {
+            std::cout<< m_matP[i][j]<<" ";
+        }
+        std::cout<<std::endl;
+    }
 
 }
 

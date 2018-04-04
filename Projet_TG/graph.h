@@ -283,6 +283,10 @@ class Graph
         ///matrice pondérée
         std::vector<std::vector<int>> m_matP;
 
+        ///vector pop
+        std::vector<int> m_matPOP;
+
+        ///ordre du graph
         int m_ordre;
 
         /// La "liste" des arêtes
