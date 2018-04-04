@@ -23,20 +23,25 @@ int main()
     Graph g;
 
     g.load_graph(path_Matrice);
-    //g.show_graph_console();
+    g.show_graph_console();
+
+    std::cout <<std::endl;
+    std::cout <<std::endl;
 
     g.load_graphPOP(path_Matrice);
-    //g.show_graph_consolePOP();
+    g.show_graph_consolePOP();
+
+    std::cout <<std::endl;
+    std::cout <<std::endl;
 
     g.add_vertex();
-    //g.display_vertices();
+    g.display_vertices();
 
+    std::cout <<std::endl;
+    std::cout <<std::endl;
 
     g.add_edge();
-    //g.display_edges();
-
-
-
+    g.display_edges();
 
 
 
@@ -44,7 +49,6 @@ int main()
     /// ( contrairement à des frameworks plus avancés )
     while ( !key[KEY_ESC] )
     {
-
         /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
         g.update();
 
