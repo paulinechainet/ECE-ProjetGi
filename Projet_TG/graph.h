@@ -317,10 +317,7 @@ class Graph
         /// Les constructeurs sont à compléter selon vos besoin...
         /// Ici on ne donne qu'un seul constructeur qui peut utiliser une interface
         Graph (GraphInterface *interface=nullptr) :
-           m_nbedges(0), m_interface(interface)
-            {
-             //   m_nbedges=0;
-            }
+           m_nbedges(0), m_interface(interface){ }
 
         void add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name="", int pic_idx=0 );
         void add_interfaced_edge(int idx, int vert1, int vert2, double weight=0);
@@ -347,14 +344,31 @@ class Graph
         void add_vertex();
         void add_edge();
 
-        ///
+        ///aff liste sommets et arretes
         void display_vertices();
         void display_edges();
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
         void update();
 
+        ///méthode principale
         void displayAlleg(int path);
+
+        ///Méthodes pour la sauvegarde des ddifférents fic
+        void save(int path);
+        void savePOP(int path);
+        void saveCoef();
+        void savePOS();
+
+
+        Vertex getVertex(int t);
+        int getPop(int t);
+
+        std::string getPicName(int idx, int path);
+
+
+
+
 };
 
 

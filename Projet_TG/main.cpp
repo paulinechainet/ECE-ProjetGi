@@ -9,57 +9,51 @@
 int main()
 {
     int path_Matrice;
+    int temp=0;
+    std::string picname;
 
     /// A appeler en 1er avant d'instancier des objets graphiques etc...
     grman::init();
 
-    std::cout<< "Numero de fichier a charger : ";
-    std::cin>> path_Matrice;
+    //do
+    //{
+        std::cout<< "Numero de fichier a charger : ";
+        std::cin>> path_Matrice;
 
-    /// Le nom du répertoire où se trouvent les images à charger
-    //grman::set_pictures_path("pics");
+        Graph g;
 
-    /// Un exemple de graphe
-    Graph g;
+        g.load_graphPOP(path_Matrice);
+        g.load_graph(path_Matrice);
 
-    g.load_graph(path_Matrice);
-    g.show_graph_console();
+        g.displayAlleg(path_Matrice);
 
-    std::cout <<std::endl;
-    std::cout <<std::endl;
+        /// Vous gardez la main sur la "boucle de jeu"while(fin==0)
+        /// ( contrairement à des frameworks plus avancés )
+        while ( !key[KEY_ESC] )
+        {
+            /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
+            g.update();
 
-    g.load_graphPOP(path_Matrice);
-    g.show_graph_consolePOP();
+            if(key[KEY_H])
+            {
+                std::cout<<"Indice de votre sommet ? ";
+                std::cin>> temp;
+                std::cout<< std::endl;
 
-    std::cout <<std::endl;
-    std::cout <<std::endl;
+                g.add_interfaced_vertex(temp,g.getPop(temp),100,100,g.getPicName(temp,path_Matrice));
+            }
 
-    //g.add_vertex();
-    //g.display_vertices();
+            //g.save(path_Matrice);
 
-    std::cout <<std::endl;
-    std::cout <<std::endl;
-
-    //g.add_edge();
-    //g.display_edges();
-
-    //g.make_example();
-    g.displayAlleg(path_Matrice);
-
-    g.display_edges();
-    g.display_vertices();
+            /// Mise à jour générale (clavier/souris/buffer etc...)
+            grman::mettre_a_jour();
+        }
 
 
-    /// Vous gardez la main sur la "boucle de jeu"
-    /// ( contrairement à des frameworks plus avancés )
-    while ( !key[KEY_ESC] )
-    {
-        /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
-        g.update();
+        //std::cout<< "Temp ? ";
+        //std::cin>> temp;
 
-        /// Mise à jour générale (clavier/souris/buffer etc...)
-        grman::mettre_a_jour();
-    }
+    //}while(temp==0);
 
     grman::fermer_allegro();
 

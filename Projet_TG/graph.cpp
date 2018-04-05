@@ -205,7 +205,7 @@ void Graph::displayAlleg(int path)
 
     if(path==1)
     {
-        pathfolder="picssavane/";
+        m_ordre = 20;
     }
     else if(path==2)
     {
@@ -216,26 +216,18 @@ void Graph::displayAlleg(int path)
 
     }
 
-    for(int i(0);i<m_ordre;i++)
-    {
-        pathpic= pathfolder +std::to_string(i)+ ".jpg";
-        add_interfaced_vertex(i,m_matPOP[i],100+(i*20),100+(i*20),pathpic);
-    }
-
+   /*
     for (int i(0);i<m_ordre;i++)
     {
         for (int j(0);j<m_ordre;j++)
         {
             if (m_matP[i][j]!=0)
             {
-                add_interfaced_edge(m_nbedges,i,j,m_matP[i][j]);
-                //m_edges[m_nbedges]= Edge(i, j, m_matP[i][j]);
+                //add_interfaced_edge(m_nbedges,i,j,m_matP[i][j]);
                 m_nbedges++;
             }
         }
-    }
-
-
+    }*/
 }
 
 ///Méthode pour lire les fichiers et le load dans les différents conteneurs
@@ -247,7 +239,7 @@ void Graph::load_graph(int fic)
     if(fic==1)
     {
         fic_name ="Matrice_P/savane.txt";
-        m_ordre = 5;
+        m_ordre = 20;
     }
     else if(fic==2)
     {
@@ -308,6 +300,7 @@ void Graph::load_graphPOP(int fic)
      if(fic==1)
      {
          fic_name ="Population/savane.txt";
+         m_ordre=20;
      }
      else if(fic==2)
      {
@@ -335,6 +328,7 @@ void Graph::load_graphPOP(int fic)
         fichier >>  temp;
         m_matPOP.push_back(temp);
     }
+
     fichier.close();
 }
 
@@ -347,38 +341,12 @@ void Graph::show_graph_consolePOP()
     }
 }
 
-///Ajout des sommets
-void Graph::add_vertex()
-{
-    for(int i(0);i<m_ordre;i++)
-    {
-        m_vertices[i]=Vertex(i,m_matPOP[i],0);
-    }
-}
-
 ///Display des sommets
 void Graph::display_vertices()
 {
     for(int i(0); i<m_ordre;i++)
     {
         m_vertices[i].displayVertex();
-    }
-}
-
-///ajout des arretes
-void Graph::add_edge()
-{
-    //vector <int> coeff_edge;
-    for (int i(0);i<m_ordre;i++) ///Création Indice de add_arrete
-    {
-        for (int j(0);j<m_ordre;j++)
-        {
-            if (m_matP[i][j]!=0)
-            {
-                m_edges[m_nbedges]= Edge(i, j, m_matP[i][j]);
-                m_nbedges++;
-            }
-        }
     }
 }
 
@@ -419,16 +387,20 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
     if ( m_vertices.find(idx)!=m_vertices.end() )
     {
         std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
-        throw "Error adding vertex";
+        //throw "Error adding vertex";
     }
-    std::cout<<idx<<std::endl;
+    else
+    {
+        // Création d'une interface de sommet
+        VertexInterface *vi = new VertexInterface(idx, x, y, pic_name, pic_idx);
+        // Ajout de la top box de l'interface de sommet
+        m_interface->m_main_box.add_child(vi->m_top_box);
+        // On peut ajouter directement des vertices dans la map avec la notation crochet :
+        m_vertices[idx] = Vertex(idx,0,value, vi);
+    }
 
-    // Création d'une interface de sommet
-    VertexInterface *vi = new VertexInterface(idx, x, y, pic_name, pic_idx);
-    // Ajout de la top box de l'interface de sommet
-    m_interface->m_main_box.add_child(vi->m_top_box);
-    // On peut ajouter directement des vertices dans la map avec la notation crochet :
-    m_vertices[idx] = Vertex(idx,0,value, vi);
+
+
 }
 
 /// Aide à l'ajout d'arcs interfacés
@@ -449,5 +421,87 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]);
     m_interface->m_main_box.add_child(ei->m_top_edge);
     m_edges[idx] = Edge(0, 0, weight, ei);
+}
+
+void Graph::save(int path)
+{
+    savePOP(path);
+    //saveCoef();
+    //savePOS();
+}
+
+void Graph::add_vertex()
+{
+
+
+
+
+}
+
+void Graph::savePOP(int path)
+{
+    std::string ficName;
+
+    if(key[KEY_D])
+    {
+
+        if(path==1)
+        {
+            ficName ="Population/savane.txt";
+        }
+        else if(path==2)
+        {
+
+        }
+        else if(path==3)
+        {
+
+        }
+
+
+        std::ofstream fichier(ficName, std::ios::out | std::ios::trunc);
+
+        if(!fichier)
+        {
+            std::cout<<"erreur enregistrement POP"<<std::endl;
+        }
+
+        for(int i(0);i<m_ordre;i++)
+        {
+
+        }
+    }
+}
+
+void Graph::saveCoef()
+{
+
+}
+
+void Graph::savePOS()
+{
+
+
+}
+
+Vertex Graph::getVertex(int t)
+{
+    return m_vertices[t];
+}
+
+int Graph::getPop(int t)
+{
+    return m_matPOP[t];
+}
+
+std::string Graph::getPicName(int idx, int path)
+{
+    std::string name;
+
+    if(path==1)
+    {
+        name="pics/savane/" + std::to_string(idx) + ".jpg" ;
+    }
+    return name;
 }
 

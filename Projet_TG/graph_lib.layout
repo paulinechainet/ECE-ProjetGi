@@ -2,41 +2,71 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+	<File name="grman\coords.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="59" />
+		</Cursor>
+	</File>
+	<File name="grman\grman_couleurs.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="96" />
+		</Cursor>
+	</File>
+	<File name="grman\widget.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2767" topLine="64" />
+		</Cursor>
+		<Folding>
+			<Collapse line="19" />
+			<Collapse line="26" />
+		</Folding>
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="482" topLine="15" />
+		</Cursor>
+	</File>
 	<File name="graph.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="13453" topLine="304" />
+			<Cursor1 position="13790" topLine="319" />
 		</Cursor>
 		<Folding>
 			<Collapse line="259" />
 		</Folding>
 	</File>
-	<File name="grman\widget.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="grman\grman.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2644" topLine="70" />
-		</Cursor>
-	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="968" topLine="40" />
+			<Cursor1 position="0" topLine="107" />
 		</Cursor>
 	</File>
 	<File name="graph.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="8751" topLine="170" />
+			<Cursor1 position="10004" topLine="76" />
 		</Cursor>
 		<Folding>
+			<Collapse line="8" />
+			<Collapse line="46" />
+			<Collapse line="60" />
+			<Collapse line="69" />
+			<Collapse line="80" />
+			<Collapse line="111" />
+			<Collapse line="124" />
+			<Collapse line="133" />
 			<Collapse line="145" />
 			<Collapse line="167" />
-			<Collapse line="242" />
-			<Collapse line="290" />
-			<Collapse line="303" />
-			<Collapse line="342" />
-			<Collapse line="351" />
-			<Collapse line="360" />
-			<Collapse line="369" />
-			<Collapse line="386" />
-			<Collapse line="395" />
-			<Collapse line="416" />
+			<Collapse line="282" />
+			<Collapse line="295" />
+			<Collapse line="336" />
+			<Collapse line="345" />
+			<Collapse line="354" />
+			<Collapse line="363" />
+			<Collapse line="384" />
+			<Collapse line="407" />
+			<Collapse line="426" />
+			<Collapse line="433" />
+			<Collapse line="441" />
+			<Collapse line="476" />
+			<Collapse line="481" />
 		</Folding>
 	</File>
 </CodeBlocks_layout_file>
