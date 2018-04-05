@@ -269,8 +269,6 @@ void thick_line(BITMAP *bmp, int x1, int y1, int x2, int y2, int thickness, int 
         for (int i=1-thickness; i<thickness; ++i)
             line(bmp, x1+i, y1, x2+i, y2, color);
 }
-
-
 } /// FIN DE NAMESPACE GRMAN
 
 
