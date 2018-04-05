@@ -275,9 +275,32 @@ class GraphInterface
         /// Dans cette boite seront ajoutés des boutons de contrôle etc...
         grman::WidgetBox m_tool_box;
 
+        ///Bouton Quitter
+        grman::WidgetButton m_quit_button;
+        grman::WidgetImage m_quit_cross;
+        grman::WidgetImage m_quit_cross2;
+
+        ///Bouton Sauvegarder
+
+        grman::WidgetButton m_save_button;
+        grman::WidgetImage m_save_pic_n; //neutre
+        grman::WidgetImage m_save_pic_a; //active
+
+        ///Bouton Pause
+
+        grman::WidgetButton m_pause_button;
+        grman::WidgetImage m_pause_pic_n; //Neutre
+        grman::WidgetImage m_pause_pic_a; //Active
+
+        ///Bouton Ajouter Supprimer
+
+        grman::WidgetButton m_ajou_button;
+        grman::WidgetButton m_suppr_button;
+        grman::WidgetImage m_ajou_pic;
+        grman::WidgetImage m_suppr_pic;
 
         // A compléter éventuellement par des widgets de décoration ou
-        // d'édition (boutons ajouter/enlever ...)
+        // d'édition (boutons ajouter/enlever ...)*/
 
     public :
 
@@ -285,7 +308,6 @@ class GraphInterface
         // voir l'implémentation dans le .cpp
         GraphInterface(int x, int y, int w, int h);
 };
-
 
 class Graph
 {
@@ -314,9 +336,6 @@ class Graph
 
     public:
 
-        ///regroupe les fonctions d'initalisation
-        void init(int path);
-
         /// Les constructeurs sont à compléter selon vos besoin...
         /// Ici on ne donne qu'un seul constructeur qui peut utiliser une interface
         Graph (GraphInterface *interface=nullptr) :
@@ -324,6 +343,13 @@ class Graph
 
         void add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name="", int pic_idx=0 );
         void add_interfaced_edge(int idx, int vert1, int vert2, double weight=0);
+
+        /// Méthode spéciale qui construit un graphe arbitraire (démo)
+        /// Voir implémentation dans le .cpp
+        /// Cette méthode est à enlever et remplacer par un système
+        /// de chargement de fichiers par exemple.
+        void make_example();
+
         ///load la matrice ponddéré dans m_matP
         void load_graph(int fic);
 
@@ -337,10 +363,8 @@ class Graph
         void show_graph_consolePOP();
 
         ///Methode pour ajouter les ssommets et arretes a partir de m_matP et m_matPop
-        void add_vertex(int path);
-
-        ///Methode pour supprimer des sommets
-        void del_vertex();
+        void add_vertex();
+        void add_edge();
 
         ///aff liste sommets et arretes
         void display_vertices();
@@ -358,12 +382,11 @@ class Graph
         void saveCoef();
         void savePOS();
 
-        ///getters
+
         Vertex getVertex(int t);
         int getPop(int t);
+
         std::string getPicName(int idx, int path);
-
-
 
 
 
