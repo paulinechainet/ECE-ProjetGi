@@ -5,13 +5,13 @@
 #include <string>
 #include <iostream>
 #include <regex>
-
-
+#include "widget.h"
 #include "grman.h"
 #include <allegro.h>
 #include <png.h>
 #include <loadpng.h>
 #include <jpgalleg.h>
+#include "widget.h"
 
 
 namespace grman
@@ -75,6 +75,7 @@ unsigned get_picture_nb(std::string name)
 
     return 1;
 }
+
 
 
 BITMAP *get_picture(std::string pic_name)
@@ -155,7 +156,8 @@ void mettre_a_jour()
 
 void init()
 {
-    if (page) return;
+    if (page)
+        return;
 
     srand(time(NULL));
 
@@ -199,7 +201,8 @@ void init()
 
 void fermer_allegro()
 {
-    if (!page) return;
+    if (!page)
+        return;
     destroy_bitmap(page);
     page=NULL;
     allegro_exit();
@@ -207,13 +210,15 @@ void fermer_allegro()
 
 void buf_effacer_page()
 {
-    if (!page) return;
+    if (!page)
+        return;
     clear_to_color(page, page_color);
 }
 
 void buf_afficher_page()
 {
-    if (!page) return;
+    if (!page)
+        return;
     acquire_screen();
     blit(page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     release_screen();
@@ -269,7 +274,35 @@ void thick_line(BITMAP *bmp, int x1, int y1, int x2, int y2, int thickness, int 
         for (int i=1-thickness; i<thickness; ++i)
             line(bmp, x1+i, y1, x2+i, y2, color);
 }
+/*
+void allegro_prog_croix()
+{
+    BITMAP *croix[0], *croix[1];
 
+    WidgetButton Croix0 = new WidgetButton(0, croix[0],"BMP_Base/croix.bmp");
+    WidgetButton Croix1 = new WidgetButton(0, croix[1],"BMP_Base/croix_r2.bmp");
+    grman::mettre_a_jour();
+    while (mouse_x>50 && mouse_y>50)
+    {
+        masked_blit(croix[0], screen,0,0,LARGEURECRAN-974,HAUTEURECRAN-678, 50, 50);
+        masked_blit(croix[0], page,0,0,LARGEURECRAN-974,HAUTEURECRAN-678, 50, 50);
+    }
+
+    if (mouse_x<50 && mouse_y<50)
+    {
+        while (mouse_x<50 && mouse_y<50)
+        {
+
+            masked_blit(croix[1], screen,0,0,LARGEURECRAN-974,HAUTEURECRAN-678, 50, 50);
+            textprintf(screen,font,50,50,makecol(0,0,0),"Sauvegarder & Quitter");
+            masked_blit(croix[1], page,0,0,LARGEURECRAN-974,HAUTEURECRAN-678, 50, 50);
+        }
+        if (mouse_b & 1)
+        {
+            textprintf(screen,font,50,50,makecol(0,0,0),"Sauvegardé");
+        }
+    }
+}*/
 
 } /// FIN DE NAMESPACE GRMAN
 

@@ -258,6 +258,8 @@ class WidgetButton : public Widget
 {
     protected :
         bool m_value = false;
+        BITMAP *m_Bpmnom;
+        std::string m_chemin;
 
     public :
 
@@ -267,6 +269,8 @@ class WidgetButton : public Widget
         bool clicked() { bool clk = m_value; m_value=false; return clk; }
         bool get_value() { return m_value; }
         void set_value(bool value) { m_value = value; }
+        void load_widgetbutton(BITMAP *m_Bpnom, std::string m_chemin);
+    WidgetButton (bool m_value, BITMAP *m_Bpmnom, std::string m_chemin);
 };
 
 
