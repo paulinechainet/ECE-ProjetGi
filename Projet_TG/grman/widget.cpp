@@ -217,9 +217,12 @@ void WidgetButton::interact_focus()
     if ( mouse_click )
         m_value = true;
 }
-
-
-
+/*
+void WidgetButton::load_widgetbutton(BITMAP *m_Bpnom, std::string m_chemin)
+{
+    m_Bpnom = load_bitmap(m_chemin, NULL);
+}
+*/
 /***************************************************
                     VSLIDER
 ****************************************************/

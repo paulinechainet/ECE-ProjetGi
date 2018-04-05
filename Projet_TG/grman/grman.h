@@ -120,6 +120,7 @@ void rafraichir_clavier_souris();
 
 void thick_line(BITMAP *bmp, int x1, int y1, int x2, int y2, int thickness, int color);
 
+void allegro_prog_croix();
 }
 
 /************************************************
