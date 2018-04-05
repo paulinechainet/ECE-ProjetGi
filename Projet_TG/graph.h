@@ -314,6 +314,9 @@ class Graph
 
     public:
 
+        ///regroupe les fonctions d'initalisation
+        void init(int path);
+
         /// Les constructeurs sont à compléter selon vos besoin...
         /// Ici on ne donne qu'un seul constructeur qui peut utiliser une interface
         Graph (GraphInterface *interface=nullptr) :
@@ -321,13 +324,6 @@ class Graph
 
         void add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name="", int pic_idx=0 );
         void add_interfaced_edge(int idx, int vert1, int vert2, double weight=0);
-
-        /// Méthode spéciale qui construit un graphe arbitraire (démo)
-        /// Voir implémentation dans le .cpp
-        /// Cette méthode est à enlever et remplacer par un système
-        /// de chargement de fichiers par exemple.
-        void make_example();
-
         ///load la matrice ponddéré dans m_matP
         void load_graph(int fic);
 
@@ -341,8 +337,10 @@ class Graph
         void show_graph_consolePOP();
 
         ///Methode pour ajouter les ssommets et arretes a partir de m_matP et m_matPop
-        void add_vertex();
-        void add_edge();
+        void add_vertex(int path);
+
+        ///Methode pour supprimer des sommets
+        void del_vertex();
 
         ///aff liste sommets et arretes
         void display_vertices();
@@ -360,11 +358,12 @@ class Graph
         void saveCoef();
         void savePOS();
 
-
+        ///getters
         Vertex getVertex(int t);
         int getPop(int t);
-
         std::string getPicName(int idx, int path);
+
+
 
 
 
