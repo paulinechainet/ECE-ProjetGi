@@ -39,8 +39,11 @@ int main()
                 std::cout<<"Indice de votre sommet ? ";
                 std::cin>> temp;
                 std::cout<< std::endl;
+                if(temp>=0 && temp<=19)
+                {
+                    g.add_interfaced_vertex(temp,g.getPop(temp),100,100,g.getPicName(temp,path_Matrice));
+                }
 
-                g.add_interfaced_vertex(temp,g.getPop(temp),100,100,g.getPicName(temp,path_Matrice));
             }
 
             //g.save(path_Matrice);

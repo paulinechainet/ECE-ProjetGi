@@ -622,3 +622,114 @@
 1522935546 source:c:\users\théo mercier\documents\v10\ece-projetgi-master\projet_tg\graph.cpp
 	"graph.h"
 
+1522830710 source:c:\users\théo mercier\documents\v11\ece-projetgi-master\projet_tg\grman\coords.cpp
+	"coords.h"
+
+1522830710 c:\users\théo mercier\documents\v11\ece-projetgi-master\projet_tg\grman\coords.h
+	<cmath>
+
+1522830710 source:c:\users\théo mercier\documents\v11\ece-projetgi-master\projet_tg\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1522830710 c:\users\théo mercier\documents\v11\ece-projetgi-master\projet_tg\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1522830710 c:\users\théo mercier\documents\v11\ece-projetgi-master\projet_tg\grman\grman_couleurs.h
+
+1522830710 c:\users\théo mercier\documents\v11\ece-projetgi-master\projet_tg\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1522830710 source:c:\users\théo mercier\documents\v11\ece-projetgi-master\projet_tg\grman\widget.cpp
+	"widget.h"
+
+1522935911 source:c:\users\théo mercier\documents\v11\ece-projetgi-master\projet_tg\main.cpp
+	"grman/grman.h"
+	<iostream>
+	<string.h>
+	"graph.h"
+
+1522935368 c:\users\théo mercier\documents\v11\ece-projetgi-master\projet_tg\graph.h
+	<vector>
+	<map>
+	<string>
+	<memory>
+	<fstream>
+	"grman/grman.h"
+
+1522937121 source:c:\users\théo mercier\documents\v12\ece-projetgi-master\projet_tg\graph.cpp
+	"graph.h"
+
+1522935368 c:\users\théo mercier\documents\v12\ece-projetgi-master\projet_tg\graph.h
+	<vector>
+	<map>
+	<string>
+	<memory>
+	<fstream>
+	"grman/grman.h"
+
+1522830710 c:\users\théo mercier\documents\v12\ece-projetgi-master\projet_tg\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1522830710 c:\users\théo mercier\documents\v12\ece-projetgi-master\projet_tg\grman\grman_couleurs.h
+
+1522830710 c:\users\théo mercier\documents\v12\ece-projetgi-master\projet_tg\grman\coords.h
+	<cmath>
+
+1522830710 c:\users\théo mercier\documents\v12\ece-projetgi-master\projet_tg\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1522830710 source:c:\users\théo mercier\documents\v12\ece-projetgi-master\projet_tg\grman\coords.cpp
+	"coords.h"
+
+1522830710 source:c:\users\théo mercier\documents\v12\ece-projetgi-master\projet_tg\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1522830710 source:c:\users\théo mercier\documents\v12\ece-projetgi-master\projet_tg\grman\widget.cpp
+	"widget.h"
+
+1522935911 source:c:\users\théo mercier\documents\v12\ece-projetgi-master\projet_tg\main.cpp
+	"grman/grman.h"
+	<iostream>
+	<string.h>
+	"graph.h"
+

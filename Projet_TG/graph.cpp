@@ -158,45 +158,6 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_main_box.set_bg_color(BLANCJAUNE);
 }
 
-
-/// Méthode spéciale qui construit un graphe arbitraire (démo)
-/// Cette méthode est à enlever et remplacer par un système
-/// de chargement de fichiers par exemple.
-/// Bien sûr on ne veut pas que vos graphes soient construits
-/// "à la main" dans le code comme ça.
-void Graph::make_example()
-{
-    m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
-    // La ligne précédente est en gros équivalente à :
-    // m_interface = new GraphInterface(50, 0, 750, 600);
-
-    /// Les sommets doivent être définis avant les arcs
-    // Ajouter le sommet d'indice 0 de valeur 30 en x=200 et y=100 avec l'image clown1.jpg etc...
-    add_interfaced_vertex(0, 30.0, 200, 100, "clown1.jpg");
-    add_interfaced_vertex(1, 60.0, 400, 100, "clown2.jpg");
-    add_interfaced_vertex(2,  50.0, 200, 300, "clown3.jpg");
-    add_interfaced_vertex(3,  0.0, 400, 300, "clown4.jpg");
-    add_interfaced_vertex(4,  100.0, 600, 300, "clown5.jpg");
-    add_interfaced_vertex(5,  0.0, 100, 500, "bad_clowns_xx3xx.jpg", 0);
-    add_interfaced_vertex(6,  0.0, 300, 500, "bad_clowns_xx3xx.jpg", 1);
-    add_interfaced_vertex(7,  0.0, 500, 500, "bad_clowns_xx3xx.jpg", 2);
-    add_interfaced_vertex(8, 30.0, 300, 100, "clown1.jpg");
-    add_interfaced_vertex(9, 30.0, 250, 100, "clown1.jpg");
-
-    /// Les arcs doivent être définis entre des sommets qui existent !
-    // AJouter l'arc d'indice 0, allant du sommet 1 au sommet 2 de poids 50 etc...
-    add_interfaced_edge(0, 1, 2, 50.0);
-    add_interfaced_edge(1, 0, 1, 50.0);
-    add_interfaced_edge(2, 1, 3, 75.0);
-    add_interfaced_edge(3, 4, 1, 25.0);
-    add_interfaced_edge(4, 6, 3, 25.0);
-    add_interfaced_edge(5, 7, 3, 25.0);
-    add_interfaced_edge(6, 3, 4, 0.0);
-    add_interfaced_edge(7, 2, 0, 100.0);
-    add_interfaced_edge(8, 5, 2, 20.0);
-    add_interfaced_edge(9, 3, 7, 80.0);
-}
-
 void Graph::displayAlleg(int path)
 {
     std::string pathfolder,pathpic;
@@ -215,19 +176,6 @@ void Graph::displayAlleg(int path)
     {
 
     }
-
-   /*
-    for (int i(0);i<m_ordre;i++)
-    {
-        for (int j(0);j<m_ordre;j++)
-        {
-            if (m_matP[i][j]!=0)
-            {
-                //add_interfaced_edge(m_nbedges,i,j,m_matP[i][j]);
-                m_nbedges++;
-            }
-        }
-    }*/
 }
 
 ///Méthode pour lire les fichiers et le load dans les différents conteneurs
@@ -383,13 +331,13 @@ void Graph::update()
 /// Aide à l'ajout de sommets interfacés
 void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name, int pic_idx )
 {
-
+    ///on verifie si le ssommet n'existe pa deja , si c'est la cas on ne fait rien
     if ( m_vertices.find(idx)!=m_vertices.end() )
     {
         std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
         //throw "Error adding vertex";
     }
-    else
+    else///ici on ajoute le sommet et on ajoute ses arretes si il en a avec les sommets deja présents
     {
         // Création d'une interface de sommet
         VertexInterface *vi = new VertexInterface(idx, x, y, pic_name, pic_idx);
@@ -397,30 +345,48 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
         m_interface->m_main_box.add_child(vi->m_top_box);
         // On peut ajouter directement des vertices dans la map avec la notation crochet :
         m_vertices[idx] = Vertex(idx,0,value, vi);
+
+        for (int i(0);i<m_ordre;i++)
+        {
+            for (int j(0);j<m_ordre;j++)
+            {
+                if ((m_matP[i][j] != 0))
+                {
+                    add_interfaced_edge(m_nbedges,i,j,m_matP[i][j]);
+                    //std::cout<<m_nbedges<<std::endl;
+                    m_nbedges++;
+                }
+            }
+        }
     }
-
-
-
 }
 
 /// Aide à l'ajout d'arcs interfacés
 void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weight)
 {
+    int ok=0;
+
     if ( m_edges.find(idx)!=m_edges.end() )
     {
         std::cerr << "Error adding edge at idx=" << idx << " already used..." << std::endl;
-        throw "Error adding edge";
+        // "Error adding edge";
+        ok=1;
     }
 
     if ( m_vertices.find(id_vert1)==m_vertices.end() || m_vertices.find(id_vert2)==m_vertices.end() )
     {
-        std::cerr << "Error adding edge idx=" << idx << " between vertices " << id_vert1 << " and " << id_vert2 << " not in m_vertices" << std::endl;
-        throw "Error adding edge";
+        //std::cerr << "Error adding edge idx=" << idx << " between vertices " << id_vert1 << " and " << id_vert2 << " not in m_vertices" << std::endl;
+        //throw "Error adding edge";
+        ok=1;
     }
 
-    EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]);
-    m_interface->m_main_box.add_child(ei->m_top_edge);
-    m_edges[idx] = Edge(0, 0, weight, ei);
+    if(ok==0)
+    {
+        EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]);
+        m_interface->m_main_box.add_child(ei->m_top_edge);
+        m_edges[idx] = Edge(0, 0, weight, ei);
+    }
+
 }
 
 void Graph::save(int path)
