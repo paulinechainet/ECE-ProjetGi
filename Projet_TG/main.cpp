@@ -1,7 +1,6 @@
 #include "grman/grman.h"
 #include <iostream>
 #include <string.h>
-
 #include "graph.h"
 
 
@@ -14,6 +13,7 @@ int main()
     std::string picname;
     char a='v';
     int sommet;
+    BITMAP *ecrantouche;
 
     /// A appeler en 1er avant d'instancier des objets graphiques etc...
     grman::init();
@@ -24,6 +24,7 @@ int main()
         std::cin>> path_Matrice;
 
         Graph g;
+        Thing2 t1;
         g.init(path_Matrice);
 
         g.loadSave(path_Matrice);
@@ -34,7 +35,6 @@ int main()
         {
             /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
             g.update();
-
             g.add_vertex(path_Matrice);
             g.del_vertex();
 

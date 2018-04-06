@@ -179,6 +179,61 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_main_box.set_dim(908,720);
     m_main_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
     m_main_box.set_bg_color(BLANCJAUNE);
+
+    ///
+
+    ///Boite de Graph
+    m_top_box.add_child(m_main_box);
+    m_main_box.set_dim(908,720);
+    m_main_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
+    m_main_box.set_bg_color(BLANCJAUNE);
+
+    ///Bouton Quitter
+    m_tool_box.add_child(m_quit_button);
+    m_quit_button.set_frame(2, 2,80, 80);
+    m_quit_cross.set_pic_name("pics/cruce/croixrouge.jpg");
+    m_quit_cross2.set_pic_name("pics/cruce/croixrouge2.jpg");
+    m_quit_cross.set_pic_idx(999);
+    m_quit_cross2.set_pic_idx(998);
+    m_quit_button.set_gravity_x(grman::GravityX::Right);
+    m_quit_cross2.set_gravity_x(grman::GravityX::Right);
+    m_quit_button.add_child(m_quit_cross);
+
+    ///Bouton Sauvegarder
+    m_tool_box.add_child(m_save_button);
+    m_save_button.set_frame(2,85,80, 80);
+    m_save_pic_a.set_pic_name("pics/save/sauvegarderA.jpg");
+    m_save_pic_n.set_pic_name("pics/save/sauvegarderN.jpg");
+    m_save_pic_a.set_pic_idx(997);
+    m_save_pic_n.set_pic_idx(996);
+    m_save_pic_a.set_gravity_x(grman::GravityX::Right);
+    m_save_pic_n.set_gravity_x(grman::GravityX::Right);
+    m_save_button.add_child(m_save_pic_a);
+
+    ///Bouton Pause
+    m_tool_box.add_child(m_pause_button);
+    m_pause_button.set_frame(2, 168,80, 80);
+    m_pause_pic_a.set_pic_name("pics/stop/pause2.jpg");
+    m_pause_pic_n.set_pic_name("pics/stop/pause1.jpg");
+    m_pause_pic_a.set_pic_idx(995);
+    m_pause_pic_a.set_pic_idx(994);
+    m_pause_pic_a.set_gravity_x(grman::GravityX::Right);
+    m_pause_pic_n.set_gravity_x(grman::GravityX::Right);
+    m_pause_button.add_child(m_pause_pic_n);
+
+    ///Bouton Ajouter
+    m_tool_box.add_child(m_ajou_button);
+    m_ajou_button.set_frame(2, 252,80, 80);
+    m_ajou_pic.set_pic_name("pics/ajoutsuppr/ajout.jpg");
+    m_ajou_button.add_child(m_ajou_pic);
+    m_ajou_pic.set_gravity_x(grman::GravityX::Right);
+
+    ///Bouton Supprimer
+    m_tool_box.add_child(m_suppr_button);
+    m_suppr_button.set_frame(2,335, 80, 80);
+    m_suppr_pic.set_pic_name("pics/ajoutsuppr/suppr.jpg");
+    m_suppr_button.add_child(m_suppr_pic);
+    m_suppr_pic.set_gravity_x(grman::GravityX::Right);
 }
 
 
@@ -401,6 +456,51 @@ void Graph::update()
 
     for (auto &elt : m_edges)
         elt.second.post_update();
+
+
+        if (m_interface->m_suppr_button.clicked())
+    {
+        std::cout<<"Ca Marche suppr"<<std::endl;
+    }
+    if (m_interface->m_ajou_button.clicked())
+    {
+        std::cout<<"Ca Marche ajout"<<std::endl;
+    }
+    if (mouse_x<80 && mouse_y<235 && mouse_y>165 && mouse_b==true)
+    {
+        /*while (mouse_x<80 && mouse_y<235 && mouse_y>165 && mouse_b==true)
+        {
+            m_interface->m_pause_button.add_child(m_pause_pic_a);
+        }*/
+    }
+    if (m_interface->m_pause_button.clicked())
+    {
+        std::cout<<"Ca Marche pause"<<std::endl;
+    }
+    if (mouse_x<80 && mouse_y<155 && mouse_y>85)
+    {
+        /*while(mouse_x<80 && mouse_y<155 && mouse_y>85)
+        {
+            m_interface->m_save_button.add_child(m_save_pic_a);
+        }*/
+    }
+
+    if (m_interface->m_save_button.clicked())
+    {
+        std::cout<<"Ca Marche sve"<<std::endl;
+    }
+    if (mouse_x<80 && mouse_y<80)
+    {
+        /*while (mouse_x<80 && mouse_y<80)
+        {
+            m_interface->m_quit_button.add_child(m_quit_cross2);
+        }*/
+    }
+
+    if (m_interface->m_quit_button.clicked())
+    {
+        std::cout<<"Ca Marche"<<std::endl;
+    }
 }
 
 
@@ -654,5 +754,121 @@ std::string Graph::getPicName(int idx, int path)
     return name;
 }
 
+Thing2::Thing2()
+{
+
+    ///Boite Totale
+    m_top_box.set_dim(1000,740);
+    m_top_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
+
+    ///Boite d'Objet
+    m_top_box.add_child(m_tool_box);
+    m_tool_box.set_dim(80,720);
+    m_tool_box.set_gravity_xy(grman::GravityX::Left, grman::GravityY::Up);
+    m_tool_box.set_bg_color(BLANCBLEU);
+
+    ///Boite de Graph
+    m_top_box.add_child(m_main_box);
+    m_main_box.set_dim(908,720);
+    m_main_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
+    m_main_box.set_bg_color(BLANCJAUNE);
+
+    ///Bouton Quitter
+    m_tool_box.add_child(m_quit_button);
+    m_quit_button.set_frame(2, 2,80, 80);
+    m_quit_cross.set_pic_name("pics/cruce/croixrouge.jpg");
+    m_quit_cross2.set_pic_name("pics/cruce/croixrouge2.jpg");
+    m_quit_cross.set_pic_idx(999);
+    m_quit_cross2.set_pic_idx(998);
+    m_quit_button.set_gravity_x(grman::GravityX::Right);
+    m_quit_cross2.set_gravity_x(grman::GravityX::Right);
+    m_quit_button.add_child(m_quit_cross);
+
+    ///Bouton Sauvegarder
+    m_tool_box.add_child(m_save_button);
+    m_save_button.set_frame(2,85,80, 80);
+    m_save_pic_a.set_pic_name("pics/save/sauvegarderA.jpg");
+    m_save_pic_n.set_pic_name("pics/save/sauvegarderN.jpg");
+    m_save_pic_a.set_pic_idx(997);
+    m_save_pic_n.set_pic_idx(996);
+    m_save_pic_a.set_gravity_x(grman::GravityX::Right);
+    m_save_pic_n.set_gravity_x(grman::GravityX::Right);
+    m_save_button.add_child(m_save_pic_a);
+
+    ///Bouton Pause
+    m_tool_box.add_child(m_pause_button);
+    m_pause_button.set_frame(2, 168,80, 80);
+    m_pause_pic_a.set_pic_name("pics/stop/pause2.jpg");
+    m_pause_pic_n.set_pic_name("pics/stop/pause1.jpg");
+    m_pause_pic_a.set_pic_idx(995);
+    m_pause_pic_a.set_pic_idx(994);
+    m_pause_pic_a.set_gravity_x(grman::GravityX::Right);
+    m_pause_pic_n.set_gravity_x(grman::GravityX::Right);
+    m_pause_button.add_child(m_pause_pic_n);
+
+    ///Bouton Ajouter
+    m_tool_box.add_child(m_ajou_button);
+    m_ajou_button.set_frame(2, 252,80, 80);
+    m_ajou_pic.set_pic_name("pics/ajoutsuppr/ajout.jpg");
+    m_ajou_button.add_child(m_ajou_pic);
+    m_ajou_pic.set_gravity_x(grman::GravityX::Right);
+
+    ///Bouton Supprimer
+    m_tool_box.add_child(m_suppr_button);
+    m_suppr_button.set_frame(2,335, 80, 80);
+    m_suppr_pic.set_pic_name("pics/ajoutsuppr/suppr.jpg");
+    m_suppr_button.add_child(m_suppr_pic);
+    m_suppr_pic.set_gravity_x(grman::GravityX::Right);
+}
+
+void Thing2::update()
+{
+    m_top_box.update();
+
+
+    if (m_suppr_button.clicked())
+    {
+        std::cout<<"Ca Marche suppr"<<std::endl;
+    }
+    if (m_ajou_button.clicked())
+    {
+        std::cout<<"Ca Marche ajout"<<std::endl;
+    }
+    if (mouse_x<80 && mouse_y<235 && mouse_y>165 && mouse_b==true)
+    {
+        while (mouse_x<80 && mouse_y<235 && mouse_y>165 && mouse_b==true)
+        {
+            m_pause_button.add_child(m_pause_pic_a);
+        }
+    }
+    if (m_pause_button.clicked())
+    {
+        std::cout<<"Ca Marche pause"<<std::endl;
+    }
+    if (mouse_x<80 && mouse_y<155 && mouse_y>85)
+    {
+        while(mouse_x<80 && mouse_y<155 && mouse_y>85)
+        {
+            m_save_button.add_child(m_save_pic_a);
+        }
+    }
+
+    if (m_save_button.clicked())
+    {
+        std::cout<<"Ca Marche sve"<<std::endl;
+    }
+    if (mouse_x<80 && mouse_y<80)
+    {
+        while (mouse_x<80 && mouse_y<80)
+        {
+            m_quit_button.add_child(m_quit_cross2);
+        }
+    }
+
+    if (m_quit_button.clicked())
+    {
+        std::cout<<"Ca Marche"<<std::endl;
+    }
+}
 
 ///SSETTERSS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
