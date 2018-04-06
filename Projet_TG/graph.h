@@ -139,6 +139,12 @@ class Vertex
         /// liste des indices des arcs partant du sommet : accès aux successeurs
         std::vector<int> m_out;*/
 
+        /// liste des indices des arcs arrivant au sommet : accès aux prédécesseurs
+        std::vector<int> m_in;
+
+        /// liste des indices des arcs partant du sommet : accès aux successeurs
+        std::vector<int> m_out;
+
         ///
         int m_indice_sommet;
 
@@ -147,6 +153,9 @@ class Vertex
 
         /// Nombre d'individu
         int m_pop;
+
+        int m_posx;
+        int m_posy;
 
 
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
@@ -203,6 +212,7 @@ class EdgeInterface
 
         // Un label de visualisation du poids de l'arc
         grman::WidgetText m_label_weight;
+
 
     public :
 
@@ -341,6 +351,7 @@ class Graph
 
         ///Methode pour supprimer des sommets
         void del_vertex();
+        void test_remove_edge(int eidx);
 
         ///aff liste sommets et arretes
         void display_vertices();
@@ -354,14 +365,17 @@ class Graph
 
         ///Méthodes pour la sauvegarde des ddifférents fic
         void save(int path);
-        void savePOP(int path);
-        void saveCoef();
-        void savePOS();
+
+        ///pour load les sauvegardes
+        void loadSave(int path);
 
         ///getters
         Vertex getVertex(int t);
         int getPop(int t);
         std::string getPicName(int idx, int path);
+
+        ///setters
+        //void set_m_ordre(int ordre);
 
 
 

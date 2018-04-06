@@ -53,6 +53,10 @@ void Vertex::pre_update()
 
     /// Copier la valeur locale de la donnée m_value vers le label sous le slider
     m_interface->m_label_value.set_message( std::to_string( (int)m_value) );
+
+    m_posx = m_interface->m_top_box.get_posx();
+    m_posy = m_interface->m_top_box.get_posy();
+
 }
 
 
@@ -68,7 +72,7 @@ void Vertex::post_update()
 
 void Vertex::displayVertex()
 {
-    std::cout<<m_indice_sommet << " " << m_value <<" " <<m_pop<<" "<<std::endl;
+    std::cout<<"indice : "<<m_indice_sommet << " value : " << m_value <<" popu : " <<m_pop<<" pos y "<<m_posx<<" pos x :"<<m_posy<<" "<<std::endl;
 }
 
 
@@ -273,28 +277,96 @@ void Graph::del_vertex()
 
     if(key[KEY_D])
     {
+
+        int fin(0);
         std::cout<<"Indice du sommet présent sur le graph a supprimer : "<<std::endl;
         std::cin>>temp;
 
         Vertex &remed =m_vertices.at(temp);
+        std::cout<< "removing vertex "<< temp <<" "<< remed.m_pop <<std::endl;
 
         if(m_interface && remed.m_interface)
         {
 
+            for(int i(0);i<m_vertices[temp].m_in.empty();i++)
+            {
+                std::cout<<i<<"top"<<std::endl;
+                test_remove_edge(m_vertices[temp].m_in[i]);
+            }
+
+            for(int i(0);i<m_vertices[temp].m_out.empty();i++)
+            {
+                std::cout<<i<<"top1"<<std::endl;
+                test_remove_edge(m_vertices[temp].m_out[i]);
+            }
+
+            //m_edges.erase()
+
+
+
+            //std::cout<<temp;
             m_interface->m_main_box.remove_child(remed.m_interface->m_top_box);
             m_vertices.erase(temp);
 
-            //for(int i(0);i<m_vertices[temp].m_i)
+            /*for(int i(0);i<m_vertices[temp].m_in.empty();i++)
+            {
+                test_remove_edge(m_vertices[temp].m_in[i]);
+            }
 
-
-
+            for(int i(0);i<m_vertices[temp].m_out.empty();i++)
+            {
+                test_remove_edge(m_vertices[temp].m_out[i]);
+            }*/
         }
-
     }
 }
 
 
 
+/// eidx index of edge to remove
+void Graph::test_remove_edge(int eidx)
+{
+    /// référence vers le Edge à enlever
+    Edge &remed=m_edges.at(eidx);
+    std::cout << "Removing edge " << eidx << " " << remed.m_from << "->" << remed.m_to << " " << remed.m_weight << std::endl;
+
+    /// Tester la cohérence : nombre d'arc entrants et sortants des sommets 1 et 2
+    std::cout << m_vertices[remed.m_from].m_in.size() << " " << m_vertices[remed.m_from].m_out.size() << std::endl;
+    std::cout << m_vertices[remed.m_to].m_in.size() << " " << m_vertices[remed.m_to].m_out.size() << std::endl;
+    std::cout << m_edges.size() << std::endl;
+
+    std::cout<<"pre boucle  ";
+    /// test : on a bien des éléments interfacés
+    if (m_interface && remed.m_interface)
+    {
+        std::cout<<"boucle  ";
+        /// Ne pas oublier qu'on a fait ça à l'ajout de l'arc :
+        /* EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]); */
+        /* m_interface->m_main_box.add_child(ei->m_top_edge); */
+        /* m_edges[idx] = Edge(weight, ei); */
+        /// Le new EdgeInterface ne nécessite pas de delete car on a un shared_ptr
+        /// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
+        /// mais il faut bien enlever le conteneur d'interface m_top_edge de l'arc de la main_box du graphe
+        m_interface->m_main_box.remove_child( remed.m_interface->m_top_edge );
+    }
+
+    /// Il reste encore à virer l'arc supprimé de la liste des entrants et sortants des 2 sommets to et from !
+    /// References sur les listes de edges des sommets from et to
+    std::vector<int> &vefrom = m_vertices[remed.m_from].m_out;
+    std::vector<int> &veto = m_vertices[remed.m_to].m_in;
+    vefrom.erase( std::remove( vefrom.begin(), vefrom.end(), eidx ), vefrom.end() );
+    veto.erase( std::remove( veto.begin(), veto.end(), eidx ), veto.end() );
+
+    /// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
+    /// Il suffit donc de supprimer l'entrée de la map pour supprimer à la fois l'Edge et le EdgeInterface
+    /// mais malheureusement ceci n'enlevait pas automatiquement l'interface top_edge en tant que child de main_box !
+    m_edges.erase( eidx );
+
+    /// Tester la cohérence : nombre d'arc entrants et sortants des sommets 1 et 2
+    std::cout << m_vertices[remed.m_from].m_in.size() << " " << m_vertices[remed.m_from].m_out.size() << std::endl;
+    std::cout << m_vertices[remed.m_to].m_in.size() << " " << m_vertices[remed.m_to].m_out.size() << std::endl;
+    std::cout << m_edges.size() << std::endl;
+}
 ///DISPLAY////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///affichage du graph en console
@@ -343,7 +415,7 @@ void Graph::display_edges()
     std::cout<<std::endl;
     std::cout<<std::endl;
 
-    std::cout<<m_nbedges;
+    //std::cout<<m_nbedges;
 }
 
 
@@ -394,9 +466,25 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
         {
             if ((m_matP[idx][j] != 0))
             {
+                //std::cout<<j<<"coucou c'est j"<<std::endl;
+                //std::cout<<idx<<"coucou c'est idx"<<std::endl;
                 add_interfaced_edge(m_nbedges,idx,j,m_matP[idx][j]);
             }
+            else if((m_matP[j][idx] != 0))
+            {
+               add_interfaced_edge(m_nbedges,j,idx,m_matP[idx][j]);
+            }
         }
+    }
+
+    for(const auto& elem:m_vertices[idx].m_in)
+    {
+        std::cout << elem << " sommets qui in  m_in de "<<idx <<std::endl;
+    }
+
+    for(const auto& elem:m_vertices[idx].m_out)
+    {
+        std::cout << elem << " sommets qui out de m_out de   "<<  idx <<std::endl;
     }
 }
 
@@ -419,24 +507,29 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
 
     if(ok==0)
     {
+
+        //m_interface->m_main_box.remove_child( remed.m_interface->m_top_edge );
+
         EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]);
         m_interface->m_main_box.add_child(ei->m_top_edge);
-        m_edges[idx] = Edge(0, 0, weight, ei);
+        m_edges[idx] = Edge(id_vert1, id_vert2, weight, ei);
 
         /// OOOPS ! Prendre en compte l'arc ajouté dans la topologie du graphe !
 
         m_edges[idx].m_from = id_vert1;
-
         m_edges[idx].m_to = id_vert2;
-        std::cout<<m_nbedges<<std::endl;
-        m_nbedges++;
 
+        m_vertices[id_vert1].m_out.push_back(idx);
+        m_vertices[id_vert2].m_in.push_back(idx);
+
+        //std::cout<<m_nbedges<<std::endl;
+        m_nbedges++;
     }
 }
 
 void Graph::add_vertex(int path)
 {
-    int temp;
+    int temp(-1);
 
     if(key[KEY_H])
     {
@@ -453,22 +546,20 @@ void Graph::add_vertex(int path)
 
 
 /// Sauvegarde//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void Graph::save(int path)
 {
-    savePOP(path);
-    //saveCoef();
-    //savePOS();
-}
 
-void Graph::savePOP(int path)
-{
-    std::string ficName;
-
-    if(key[KEY_D])
+    if(key[KEY_B])
     {
+        //std::cout<<"key b";
+        //std::cout<< keypressed();
+        std::string ficName;
+
         if(path==1)
         {
-            ficName ="Population/savane.txt";
+            ficName ="Save/savane.txt";
+            //std::cout<<"path ok"<<std::endl;
         }
         else if(path==2)
         {
@@ -487,24 +578,97 @@ void Graph::savePOP(int path)
             std::cout<<"erreur enregistrement POP"<<std::endl;
         }
 
-        for(int i(0); i<m_ordre; i++)
+        for(int i(0); i<m_ordre;i++)
         {
+            //std::cout<<"boucle ok i :"<< i <<std::endl;
 
+            if(m_vertices[i].m_indice_sommet!= 0)
+            {
+                std::cout<<"sauvgarde eff"<< std::endl;
+                fichier<< m_vertices[i].m_indice_sommet<<" ";
+                fichier<< m_vertices[i].m_value<<" ";
+                fichier<< m_vertices[i].m_pop<<" ";
+                fichier<< m_vertices[i].m_posx<<" ";
+                fichier<< m_vertices[i].m_posy<<" ";
+                fichier<< std::endl;
+            }
         }
+
+        fichier.close();
     }
 }
 
-void Graph::saveCoef()
+void Graph::loadSave(int path)
 {
 
+    int temp1(0),temp2(0),temp3(0),temp4(0),temp5(0),temp6(0);
+
+        std::string ficName;
+        std::string ligne;
+        std::string name;
+        std::vector<int> test;
+
+        if(path==1)
+        {
+            ficName ="Save/savane.txt";
+            //std::cout<<"path ok"<<std::endl;    if(path==1)
+
+            name="pics/savane/" ;
+
+
+        }
+        else if(path==2)
+        {
+
+        }
+        else if(path==3)
+        {
+
+        }
+
+        std::ifstream fichier(ficName, std::ios::in);
+
+        if(!fichier.is_open())  // si l'ouverture echoue
+        {
+            std::cout << "Erreur à l'ouverture du fichier save !" << std::endl;
+        }
+
+        while(std::getline(fichier, ligne))
+        {
+            temp1++;
+            //std::cout<< temp1;
+        }
+
+
+
+        fichier.clear();
+        fichier.seekg(0,std::ios::beg);
+
+
+        //temp1= 6;
+
+        std::cout<< temp1;
+
+        for(int i(0);i<temp1;i++)
+        {
+            fichier >> temp2;
+            fichier >> temp3;
+            fichier >> temp4;
+            fichier >> temp5;
+            fichier >> temp6;
+
+            if(temp2!=0)
+            {
+                add_interfaced_vertex(temp2,temp4,temp5,temp6, name+ std::to_string(temp2) + ".jpg" );
+            }
+
+        }
+
+        fichier.close();
+
+
+
 }
-
-void Graph::savePOS()
-{
-
-
-}
-
 
 
 ///   GETTERs//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -529,3 +693,5 @@ std::string Graph::getPicName(int idx, int path)
     return name;
 }
 
+
+///SSETTERSS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

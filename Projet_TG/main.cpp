@@ -25,6 +25,8 @@ int main()
         Graph g;
         g.init(path_Matrice);
 
+        g.loadSave(path_Matrice);
+
         /// Vous gardez la main sur la "boucle de jeu"while(fin==0)
         /// ( contrairement à des frameworks plus avancés )
         while ( !key[KEY_ESC] )
@@ -35,7 +37,7 @@ int main()
             g.add_vertex(path_Matrice);
             g.del_vertex();
 
-            //g.save(path_Matrice);
+            g.save(path_Matrice);
 
             /// Mise à jour générale (clavier/souris/buffer etc...)
             grman::mettre_a_jour();
