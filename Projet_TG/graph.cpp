@@ -665,8 +665,10 @@ std::string Graph::getPicName(int idx, int path)
 ///SSETTERSS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-std::vector<int> Graph::uneCompoCo(int s)
+std::vector<int> Graph::uneCompoCo(int s, std::vector<std::vector<int>> matrice)
 {
+    std::vector<std::vector<int>> trans;
+    std::vector<int> temp(m_ordre,0);
 
    ///variables loacales
     std::vector<int> c1(m_ordre,0);
@@ -675,34 +677,26 @@ std::vector<int> Graph::uneCompoCo(int s)
     std::vector<int> marque(m_ordre,0);
     int ajoute=1;
 
-
-
-    std::vector<std::vector<int>> trans;
-    std::vector<int> col(m_ordre,0);
-
-
+    ///constru mat trans
     for(int i(0); i<m_ordre ; i++)
     {
-        trans.push_back(col);
+        trans.push_back(temp);
     }
 
     for(int i = 0; i < m_ordre; ++i)
         for(int j = 0; j < m_ordre; ++j)
         {
-            trans[j][i]=m_matP[i][j];
+            trans[j][i]=matrice[i][j];
         }
 
-
-    for(int i = 0; i < m_ordre; ++i)
+    /*for(int i = 0; i < m_ordre; ++i)
     {
         for(int j = 0; j < m_ordre; ++j)
         {
             std::cout<<trans[i][j];
         }
         std::cout<<std::endl;
-    }
-
-
+    }*/
 
     c1[s]=1;
     c2[s]=1;
@@ -761,13 +755,61 @@ std::vector<int> Graph::uneCompoCo(int s)
         }
     }
 
-
-
     for(int i(0);i<m_ordre;i++)
     {
         c[i]=c1[i] & c2[i];
-        std::cout<<c[i]<<std::endl;
     }
 
     return c;
+}
+
+void Graph::toutesLesCompo()
+{
+    std::vector<std::vector<int>> matrice;
+    std::vector<int> temp(m_ordre,0);
+
+    std::vector<std::vector<int>> tacb;
+
+    std::vector<int> marque(m_ordre, 0);
+
+
+    for(int i(0);i<m_ordre ; i++)
+    {
+        matrice.push_back(temp);
+        tacb.push_back(temp);
+    }
+
+    for(int i = 0; i < m_ordre; ++i)
+    {
+        for(int j = 0; j < m_ordre ; ++j)
+        {
+            for(int k(0); k<m_edges.size(); k++)
+            {
+                if(m_edges[k].m_from == i && m_edges[k].m_to == j)
+                {
+                    matrice[i][j]=1;
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < m_ordre; ++i)
+    {
+        if(!marque[i])
+        {
+            tacb[i]= uneCompoCo(i,matrice);
+        }
+    }
+
+    for(int i(0);i<m_ordre;i++)
+    {
+        for(int j(0); j<m_ordre;j++)
+        {
+            std::cout<<tacb[i][j];
+        }
+        std::cout<<std::endl;
+    }
+
+
+
 }

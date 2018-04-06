@@ -380,7 +380,9 @@ class Graph
         //void set_m_ordre(int ordre);
 
         ///fortement connexe
-        std::vector<int> uneCompoCo(int s);
+        std::vector<int> uneCompoCo(int s, std::vector<std::vector<int>> matAdja);
+
+        void toutesLesCompo();
 };
 
 

@@ -47,10 +47,10 @@ int main()
         }
 
         //g.display_vertices();
-        //g.display_edges();
+        g.display_edges();
 
 
-        //g.uneCompoCo(4);
+        g.toutesLesCompo();
 
 
         std::cout<< "Quitter le jeu ? 1. oui 0.non  "<<std::endl;
