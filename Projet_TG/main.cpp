@@ -13,6 +13,7 @@ int main()
     int temp=-1;
     std::string picname;
     char a='v';
+    int sommet;
 
     /// A appeler en 1er avant d'instancier des objets graphiques etc...
     grman::init();
@@ -38,6 +39,13 @@ int main()
             g.del_vertex();
 
             g.save(path_Matrice);
+
+        if(key[KEY_P])
+        {
+            std::cout<<"arrete a del : " <<std::endl;
+            std::cin>> sommet;
+            g.test_remove_edge(sommet);
+        }
 
             /// Mise à jour générale (clavier/souris/buffer etc...)
             grman::mettre_a_jour();
