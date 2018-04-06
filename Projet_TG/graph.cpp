@@ -179,61 +179,6 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_main_box.set_dim(908,720);
     m_main_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
     m_main_box.set_bg_color(BLANCJAUNE);
-
-    ///
-
-    ///Boite de Graph
-    m_top_box.add_child(m_main_box);
-    m_main_box.set_dim(908,720);
-    m_main_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
-    m_main_box.set_bg_color(BLANCJAUNE);
-
-    ///Bouton Quitter
-    m_tool_box.add_child(m_quit_button);
-    m_quit_button.set_frame(2, 2,80, 80);
-    m_quit_cross.set_pic_name("pics/cruce/croixrouge.jpg");
-    m_quit_cross2.set_pic_name("pics/cruce/croixrouge2.jpg");
-    m_quit_cross.set_pic_idx(999);
-    m_quit_cross2.set_pic_idx(998);
-    m_quit_button.set_gravity_x(grman::GravityX::Right);
-    m_quit_cross2.set_gravity_x(grman::GravityX::Right);
-    m_quit_button.add_child(m_quit_cross);
-
-    ///Bouton Sauvegarder
-    m_tool_box.add_child(m_save_button);
-    m_save_button.set_frame(2,85,80, 80);
-    m_save_pic_a.set_pic_name("pics/save/sauvegarderA.jpg");
-    m_save_pic_n.set_pic_name("pics/save/sauvegarderN.jpg");
-    m_save_pic_a.set_pic_idx(997);
-    m_save_pic_n.set_pic_idx(996);
-    m_save_pic_a.set_gravity_x(grman::GravityX::Right);
-    m_save_pic_n.set_gravity_x(grman::GravityX::Right);
-    m_save_button.add_child(m_save_pic_a);
-
-    ///Bouton Pause
-    m_tool_box.add_child(m_pause_button);
-    m_pause_button.set_frame(2, 168,80, 80);
-    m_pause_pic_a.set_pic_name("pics/stop/pause2.jpg");
-    m_pause_pic_n.set_pic_name("pics/stop/pause1.jpg");
-    m_pause_pic_a.set_pic_idx(995);
-    m_pause_pic_a.set_pic_idx(994);
-    m_pause_pic_a.set_gravity_x(grman::GravityX::Right);
-    m_pause_pic_n.set_gravity_x(grman::GravityX::Right);
-    m_pause_button.add_child(m_pause_pic_n);
-
-    ///Bouton Ajouter
-    m_tool_box.add_child(m_ajou_button);
-    m_ajou_button.set_frame(2, 252,80, 80);
-    m_ajou_pic.set_pic_name("pics/ajoutsuppr/ajout.jpg");
-    m_ajou_button.add_child(m_ajou_pic);
-    m_ajou_pic.set_gravity_x(grman::GravityX::Right);
-
-    ///Bouton Supprimer
-    m_tool_box.add_child(m_suppr_button);
-    m_suppr_button.set_frame(2,335, 80, 80);
-    m_suppr_pic.set_pic_name("pics/ajoutsuppr/suppr.jpg");
-    m_suppr_button.add_child(m_suppr_pic);
-    m_suppr_pic.set_gravity_x(grman::GravityX::Right);
 }
 
 
@@ -357,26 +302,33 @@ void Graph::del_vertex()
 /// eidx index of edge to remove
 void Graph::test_remove_edge(int eidx)
 {
-    /// référence vers le Edge à enlever
-    Edge &remed=m_edges.at(eidx);
 
-    if (m_interface && remed.m_interface)
+    if(key[KEY_P])
     {
 
-        m_interface->m_main_box.remove_child( remed.m_interface->m_top_edge );
+        std::cout<<"arrete a del : " <<std::endl;
+        std::cin>> eidx;
+    /// référence vers le Edge à enlever
+        Edge &remed=m_edges.at(eidx);
+
+        if (m_interface && remed.m_interface)
+        {
+
+            m_interface->m_main_box.remove_child( remed.m_interface->m_top_edge );
+        }
+
+        /// Il reste encore à virer l'arc supprimé de la liste des entrants et sortants des 2 sommets to et from !
+        /// References sur les listes de edges des sommets from et to
+        std::vector<int> &vefrom = m_vertices[remed.m_from].m_out;
+        std::vector<int> &veto = m_vertices[remed.m_to].m_in;
+        vefrom.erase( std::remove( vefrom.begin(), vefrom.end(), eidx ), vefrom.end() );
+        veto.erase( std::remove( veto.begin(), veto.end(), eidx ), veto.end() );
+
+        /// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
+        /// Il suffit donc de supprimer l'entrée de la map pour supprimer à la fois l'Edge et le EdgeInterface
+        /// mais malheureusement ceci n'enlevait pas automatiquement l'interface top_edge en tant que child de main_box !
+        m_edges.erase( eidx );
     }
-
-    /// Il reste encore à virer l'arc supprimé de la liste des entrants et sortants des 2 sommets to et from !
-    /// References sur les listes de edges des sommets from et to
-    std::vector<int> &vefrom = m_vertices[remed.m_from].m_out;
-    std::vector<int> &veto = m_vertices[remed.m_to].m_in;
-    vefrom.erase( std::remove( vefrom.begin(), vefrom.end(), eidx ), vefrom.end() );
-    veto.erase( std::remove( veto.begin(), veto.end(), eidx ), veto.end() );
-
-    /// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
-    /// Il suffit donc de supprimer l'entrée de la map pour supprimer à la fois l'Edge et le EdgeInterface
-    /// mais malheureusement ceci n'enlevait pas automatiquement l'interface top_edge en tant que child de main_box !
-    m_edges.erase( eidx );
 
     /// Tester la cohérence : nombre d'arc entrants et sortants des sommets 1 et 2
     /*std::cout << m_vertices[remed.m_from].m_in.size() << " " << m_vertices[remed.m_from].m_out.size() << std::endl;
@@ -456,51 +408,6 @@ void Graph::update()
 
     for (auto &elt : m_edges)
         elt.second.post_update();
-
-
-        if (m_interface->m_suppr_button.clicked())
-    {
-        std::cout<<"Ca Marche suppr"<<std::endl;
-    }
-    if (m_interface->m_ajou_button.clicked())
-    {
-        std::cout<<"Ca Marche ajout"<<std::endl;
-    }
-    if (mouse_x<80 && mouse_y<235 && mouse_y>165 && mouse_b==true)
-    {
-        /*while (mouse_x<80 && mouse_y<235 && mouse_y>165 && mouse_b==true)
-        {
-            m_interface->m_pause_button.add_child(m_pause_pic_a);
-        }*/
-    }
-    if (m_interface->m_pause_button.clicked())
-    {
-        std::cout<<"Ca Marche pause"<<std::endl;
-    }
-    if (mouse_x<80 && mouse_y<155 && mouse_y>85)
-    {
-        /*while(mouse_x<80 && mouse_y<155 && mouse_y>85)
-        {
-            m_interface->m_save_button.add_child(m_save_pic_a);
-        }*/
-    }
-
-    if (m_interface->m_save_button.clicked())
-    {
-        std::cout<<"Ca Marche sve"<<std::endl;
-    }
-    if (mouse_x<80 && mouse_y<80)
-    {
-        /*while (mouse_x<80 && mouse_y<80)
-        {
-            m_interface->m_quit_button.add_child(m_quit_cross2);
-        }*/
-    }
-
-    if (m_interface->m_quit_button.clicked())
-    {
-        std::cout<<"Ca Marche"<<std::endl;
-    }
 }
 
 
@@ -754,121 +661,113 @@ std::string Graph::getPicName(int idx, int path)
     return name;
 }
 
-Thing2::Thing2()
-{
-
-    ///Boite Totale
-    m_top_box.set_dim(1000,740);
-    m_top_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
-
-    ///Boite d'Objet
-    m_top_box.add_child(m_tool_box);
-    m_tool_box.set_dim(80,720);
-    m_tool_box.set_gravity_xy(grman::GravityX::Left, grman::GravityY::Up);
-    m_tool_box.set_bg_color(BLANCBLEU);
-
-    ///Boite de Graph
-    m_top_box.add_child(m_main_box);
-    m_main_box.set_dim(908,720);
-    m_main_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
-    m_main_box.set_bg_color(BLANCJAUNE);
-
-    ///Bouton Quitter
-    m_tool_box.add_child(m_quit_button);
-    m_quit_button.set_frame(2, 2,80, 80);
-    m_quit_cross.set_pic_name("pics/cruce/croixrouge.jpg");
-    m_quit_cross2.set_pic_name("pics/cruce/croixrouge2.jpg");
-    m_quit_cross.set_pic_idx(999);
-    m_quit_cross2.set_pic_idx(998);
-    m_quit_button.set_gravity_x(grman::GravityX::Right);
-    m_quit_cross2.set_gravity_x(grman::GravityX::Right);
-    m_quit_button.add_child(m_quit_cross);
-
-    ///Bouton Sauvegarder
-    m_tool_box.add_child(m_save_button);
-    m_save_button.set_frame(2,85,80, 80);
-    m_save_pic_a.set_pic_name("pics/save/sauvegarderA.jpg");
-    m_save_pic_n.set_pic_name("pics/save/sauvegarderN.jpg");
-    m_save_pic_a.set_pic_idx(997);
-    m_save_pic_n.set_pic_idx(996);
-    m_save_pic_a.set_gravity_x(grman::GravityX::Right);
-    m_save_pic_n.set_gravity_x(grman::GravityX::Right);
-    m_save_button.add_child(m_save_pic_a);
-
-    ///Bouton Pause
-    m_tool_box.add_child(m_pause_button);
-    m_pause_button.set_frame(2, 168,80, 80);
-    m_pause_pic_a.set_pic_name("pics/stop/pause2.jpg");
-    m_pause_pic_n.set_pic_name("pics/stop/pause1.jpg");
-    m_pause_pic_a.set_pic_idx(995);
-    m_pause_pic_a.set_pic_idx(994);
-    m_pause_pic_a.set_gravity_x(grman::GravityX::Right);
-    m_pause_pic_n.set_gravity_x(grman::GravityX::Right);
-    m_pause_button.add_child(m_pause_pic_n);
-
-    ///Bouton Ajouter
-    m_tool_box.add_child(m_ajou_button);
-    m_ajou_button.set_frame(2, 252,80, 80);
-    m_ajou_pic.set_pic_name("pics/ajoutsuppr/ajout.jpg");
-    m_ajou_button.add_child(m_ajou_pic);
-    m_ajou_pic.set_gravity_x(grman::GravityX::Right);
-
-    ///Bouton Supprimer
-    m_tool_box.add_child(m_suppr_button);
-    m_suppr_button.set_frame(2,335, 80, 80);
-    m_suppr_pic.set_pic_name("pics/ajoutsuppr/suppr.jpg");
-    m_suppr_button.add_child(m_suppr_pic);
-    m_suppr_pic.set_gravity_x(grman::GravityX::Right);
-}
-
-void Thing2::update()
-{
-    m_top_box.update();
-
-
-    if (m_suppr_button.clicked())
-    {
-        std::cout<<"Ca Marche suppr"<<std::endl;
-    }
-    if (m_ajou_button.clicked())
-    {
-        std::cout<<"Ca Marche ajout"<<std::endl;
-    }
-    if (mouse_x<80 && mouse_y<235 && mouse_y>165 && mouse_b==true)
-    {
-        while (mouse_x<80 && mouse_y<235 && mouse_y>165 && mouse_b==true)
-        {
-            m_pause_button.add_child(m_pause_pic_a);
-        }
-    }
-    if (m_pause_button.clicked())
-    {
-        std::cout<<"Ca Marche pause"<<std::endl;
-    }
-    if (mouse_x<80 && mouse_y<155 && mouse_y>85)
-    {
-        while(mouse_x<80 && mouse_y<155 && mouse_y>85)
-        {
-            m_save_button.add_child(m_save_pic_a);
-        }
-    }
-
-    if (m_save_button.clicked())
-    {
-        std::cout<<"Ca Marche sve"<<std::endl;
-    }
-    if (mouse_x<80 && mouse_y<80)
-    {
-        while (mouse_x<80 && mouse_y<80)
-        {
-            m_quit_button.add_child(m_quit_cross2);
-        }
-    }
-
-    if (m_quit_button.clicked())
-    {
-        std::cout<<"Ca Marche"<<std::endl;
-    }
-}
 
 ///SSETTERSS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+std::vector<int> Graph::uneCompoCo(int s)
+{
+
+   ///variables loacales
+    std::vector<int> c1(m_ordre,0);
+    std::vector<int> c2(m_ordre,0);
+    std::vector<int> c(m_ordre,0);
+    std::vector<int> marque(m_ordre,0);
+    int ajoute=1;
+
+
+
+    std::vector<std::vector<int>> trans;
+    std::vector<int> col(m_ordre,0);
+
+
+    for(int i(0); i<m_ordre ; i++)
+    {
+        trans.push_back(col);
+    }
+
+    for(int i = 0; i < m_ordre; ++i)
+        for(int j = 0; j < m_ordre; ++j)
+        {
+            trans[j][i]=m_matP[i][j];
+        }
+
+
+    for(int i = 0; i < m_ordre; ++i)
+    {
+        for(int j = 0; j < m_ordre; ++j)
+        {
+            std::cout<<trans[i][j];
+        }
+        std::cout<<std::endl;
+    }
+
+
+
+    c1[s]=1;
+    c2[s]=1;
+
+
+    ///recherche des composantes connexes partant de s a ajouter dans c1
+    while(ajoute)
+    {
+        ajoute = 0;
+
+        for(int i(0);i<m_ordre;i++)
+        {
+            if(!marque[i] && c1[i])
+            {
+                marque[i]=1;
+
+                for(int j(0);j<m_ordre;j++)
+                {
+                    if(m_matP[i][j] && !marque[j])
+                    {
+                        c1[j]=1;
+                        ajoute = 1;
+                    }
+                }
+            }
+        }
+    }
+
+    for(int i(0);i<m_ordre;i++)
+    {
+        marque[i]=0;
+    }
+
+    ajoute =1;
+
+    ///recherche des composantes connexes partant de s a ajouter dans c2
+    while(ajoute)
+    {
+        ajoute = 0;
+
+        for(int i(0);i<m_ordre;i++)
+        {
+            if(!marque[i] && c2[i])
+            {
+                marque[i]=1;
+
+                for(int j(0);j<m_ordre;j++)
+                {
+                    if(trans[i][j] && !marque[j])
+                    {
+                        c2[j]=1;
+                        ajoute = 1;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    for(int i(0);i<m_ordre;i++)
+    {
+        c[i]=c1[i] & c2[i];
+        std::cout<<c[i]<<std::endl;
+    }
+
+    return c;
+}

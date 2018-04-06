@@ -1,6 +1,7 @@
 #include "grman/grman.h"
 #include <iostream>
 #include <string.h>
+
 #include "graph.h"
 
 
@@ -13,7 +14,6 @@ int main()
     std::string picname;
     char a='v';
     int sommet;
-    BITMAP *ecrantouche;
 
     /// A appeler en 1er avant d'instancier des objets graphiques etc...
     grman::init();
@@ -24,7 +24,6 @@ int main()
         std::cin>> path_Matrice;
 
         Graph g;
-        Thing2 t1;
         g.init(path_Matrice);
 
         g.loadSave(path_Matrice);
@@ -35,24 +34,23 @@ int main()
         {
             /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
             g.update();
-            g.add_vertex(path_Matrice);
-            g.del_vertex();
 
-            g.save(path_Matrice);
+            g.add_vertex(path_Matrice);///H
+            g.del_vertex();///D
 
-        if(key[KEY_P])
-        {
-            std::cout<<"arrete a del : " <<std::endl;
-            std::cin>> sommet;
-            g.test_remove_edge(sommet);
-        }
+            g.save(path_Matrice);///B
+            g.test_remove_edge(sommet);///P
+
 
             /// Mise à jour générale (clavier/souris/buffer etc...)
             grman::mettre_a_jour();
         }
 
-        g.display_vertices();
-        g.display_edges();
+        //g.display_vertices();
+        //g.display_edges();
+
+
+        //g.uneCompoCo(4);
 
 
         std::cout<< "Quitter le jeu ? 1. oui 0.non  "<<std::endl;
