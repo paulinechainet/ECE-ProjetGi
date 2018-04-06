@@ -291,6 +291,31 @@ class GraphInterface
         // A compléter éventuellement par des widgets de décoration ou
         // d'édition (boutons ajouter/enlever ...)
 
+                ///
+         ///Bouton Quitter
+        grman::WidgetButton m_quit_button;
+        grman::WidgetImage m_quit_cross;
+        grman::WidgetImage m_quit_cross2;
+
+        ///Bouton Sauvegarder
+
+        grman::WidgetButton m_save_button;
+        grman::WidgetImage m_save_pic_n; //neutre
+        grman::WidgetImage m_save_pic_a; //active
+
+        ///Bouton Pause
+
+        grman::WidgetButton m_pause_button;
+        grman::WidgetImage m_pause_pic_n; //Neutre
+        grman::WidgetImage m_pause_pic_a; //Active
+
+        ///Bouton Ajouter Supprimer
+
+        grman::WidgetButton m_ajou_button;
+        grman::WidgetButton m_suppr_button;
+        grman::WidgetImage m_ajou_pic;
+        grman::WidgetImage m_suppr_pic;
+
     public :
 
         // Le constructeur met en place les éléments de l'interface
@@ -385,5 +410,47 @@ class Graph
         void toutesLesCompo();
 };
 
+class Thing2
+{
+    friend class Graph;
+    friend class GraphInterface;
+private :
+
+            /// La boite qui contient toute l'interface d'un graphe
+        grman::WidgetBox m_top_box;
+
+        /// Dans cette boite seront ajoutés les (interfaces des) sommets et des arcs...
+        grman::WidgetBox m_main_box;
+
+        /// Dans cette boite seront ajoutés des boutons de contrôle etc...
+        grman::WidgetBox m_tool_box;
+
+       ///Bouton Quitter
+        grman::WidgetButton m_quit_button;
+        grman::WidgetImage m_quit_cross;
+        grman::WidgetImage m_quit_cross2;
+
+        ///Bouton Sauvegarder
+
+        grman::WidgetButton m_save_button;
+        grman::WidgetImage m_save_pic_n; //neutre
+        grman::WidgetImage m_save_pic_a; //active
+
+        ///Bouton Pause
+
+        grman::WidgetButton m_pause_button;
+        grman::WidgetImage m_pause_pic_n; //Neutre
+        grman::WidgetImage m_pause_pic_a; //Active
+
+        ///Bouton Ajouter Supprimer
+
+        grman::WidgetButton m_ajou_button;
+        grman::WidgetButton m_suppr_button;
+        grman::WidgetImage m_ajou_pic;
+        grman::WidgetImage m_suppr_pic;
+    public :
+    Thing2();
+    void update();
+};
 
 #endif // GRAPH_H_INCLUDED

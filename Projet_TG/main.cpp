@@ -1,7 +1,7 @@
 #include "grman/grman.h"
 #include <iostream>
 #include <string.h>
-
+#include "Menu/menu.h"
 #include "graph.h"
 
 
@@ -14,14 +14,21 @@ int main()
     std::string picname;
     char a='v';
     int sommet;
+    int choix_menu;
 
     /// A appeler en 1er avant d'instancier des objets graphiques etc...
     grman::init();
 
     do
     {
-        std::cout<< "Numero de fichier a charger : ";
-        std::cin>> path_Matrice;
+    //Affichage Ecran Titre
+    Menu menu;
+    //Choix du menu
+    choix_menu=menu.display_menu1();
+    std::cout<<choix_menu<<std::endl;
+    path_Matrice=choix_menu;
+
+
 
         Graph g;
         g.init(path_Matrice);
