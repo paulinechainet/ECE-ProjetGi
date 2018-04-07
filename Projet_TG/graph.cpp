@@ -243,7 +243,7 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
 
     ///Bouton Suppr arrete
     m_tool_box.add_child(m_supprarrete_button);
-    m_supprarrete_button.set_frame(2,504, 80,80);
+    m_supprarrete_button.set_frame(2,584, 80,80);
     m_supprarrete_pics.set_pic_name("pics/ajoutsuppr/supprarrete.jpg");
     m_supprarrete_button.add_child(m_supprarrete_pics);
     m_supprarrete_pics.set_gravity_x(grman::GravityX::Right);
@@ -1018,7 +1018,7 @@ Thing2::Thing2()
 
     ///Bouton Suppr arrete
     m_tool_box.add_child(m_supprarrete_button);
-    m_supprarrete_button.set_frame(2,504, 80,80);
+    m_supprarrete_button.set_frame(2,584, 80,80);
     m_supprarrete_pics.set_pic_name("pics/ajoutsuppr/supprarrete.jpg");
     m_supprarrete_button.add_child(m_supprarrete_pics);
     m_supprarrete_pics.set_gravity_x(grman::GravityX::Right);
