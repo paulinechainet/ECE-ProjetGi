@@ -442,9 +442,6 @@ class WidgetEdge : public Widget
 
         void set_children_position(double rel_pos) { m_children_position = rel_pos; }
         void set_children_lateral(double abs_lat) { m_children_lateral = abs_lat; }
-
-
-        void set_thickness(float _y) {m_thickness=(_y/28)+2.5;}
 };
 
 

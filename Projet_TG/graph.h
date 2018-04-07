@@ -132,7 +132,7 @@ class Vertex
     friend class Edge;
     friend class EdgeInterface;
 
-    private :
+    public :
         /*/// liste des indices des arcs arrivant au sommet : accès aux prédécesseurs
         std::vector<int> m_in;
 
@@ -180,6 +180,9 @@ class Vertex
         void post_update();
 
         void displayVertex();
+
+        int getValue(){return m_value;};
+        void setValue(int val){m_value = val;};
 };
 
 
@@ -252,10 +255,6 @@ class Edge
         Edge (int from=0, int to=0, double weight=0, EdgeInterface *interface=nullptr) : m_from(from), m_to(to),
             m_weight(weight), m_interface(interface)  {  }
 
-
-        void set_thickness(float _t) {m_interface->m_top_edge.set_thickness(_t);}
-
-
         /// Edge étant géré par Graph ce sera la méthode update de graph qui appellera
         /// le pre_update et post_update de Edge (pas directement la boucle de jeu)
         /// Voir l'implémentation Graph::update dans le .cpp
@@ -320,19 +319,6 @@ class GraphInterface
         grman::WidgetImage m_ajou_pic;
         grman::WidgetImage m_suppr_pic;
 
-        ///Bouton Forte connexité couleur
-
-        grman::WidgetButton m_fconnextite_button;
-        grman::WidgetImage  m_fconnextite_pic;
-
-        ///Bouton Forte connexité RAZ
-        grman::WidgetButton m_fconnextiteRAZ_button;
-        grman::WidgetImage m_fconnextiteRAZ_pics;
-
-        ///Bouton Suppr Arrete
-        grman::WidgetButton m_supprarrete_button;
-        grman::WidgetImage m_supprarrete_pics;
-
     public :
 
         // Le constructeur met en place les éléments de l'interface
@@ -365,13 +351,13 @@ class Graph
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<GraphInterface> m_interface = nullptr;
 
+        std::vector<std::vector<int>> m_tacb;
+
 
     public:
 
         ///regroupe les fonctions d'initalisation
         void init(int path);
-
-        void set_thickness();
 
         /// Les constructeurs sont à compléter selon vos besoin...
         /// Ici on ne donne qu'un seul constructeur qui peut utiliser une interface
@@ -392,23 +378,25 @@ class Graph
         ///affiche m_matPop
         void show_graph_consolePOP();
 
+        ///Methode pour ajouter les ssommets et arretes a partir de m_matP et m_matPop
+        void add_vertex(int path);
+
+        ///Methode pour supprimer des sommets
+        void del_vertex();
+        void test_remove_edge(int eidx);
+
         ///aff liste sommets et arretes
         void display_vertices();
         void display_edges();
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-        void update(int path);
+        void update();
 
-        ///Méthode Bouton
-        bool update_stepquit();
-        void update_stepajout(int path);//Bouton Ajout
-        void update_stepsave(int path);//Bouton Save
-        void update_stepsuppr();//Bouton Suppr
-        void update_stepfconnexite();//Bouton F. Connexité
-        void update_stepfconnexiteRAZ();//Bouton RAZ F. Connexité
-        void update_stepsupprarrete(int eidx);//Suppr Arrete
         ///méthode principale
         void displayAlleg(int path);
+
+        ///Méthodes pour la sauvegarde des ddifférents fic
+        void save(int path);
 
         ///pour load les sauvegardes
         void loadSave(int path);
@@ -423,10 +411,21 @@ class Graph
 
         ///fortement connexe
         std::vector<int> uneCompoCo(int s, std::vector<std::vector<int>> matAdja);
-
         void toutesLesCompo();
+        void colorer();
+
+        ///
+        int calcul_K(int s);
+
+        int calcul_Coef(int s);
+
+        void retrachement();
+
 };
 
+
+
+/// ***************************************************************************************************
 class Thing2
 {
     friend class Graph;
@@ -465,20 +464,6 @@ private :
         grman::WidgetButton m_suppr_button;
         grman::WidgetImage m_ajou_pic;
         grman::WidgetImage m_suppr_pic;
-
-        ///Bouton Forte connexité couleur
-
-        grman::WidgetButton m_fconnextite_button;
-        grman::WidgetImage  m_fconnextite_pic;
-
-        ///Bouton Forte connexité RAZ
-        grman::WidgetButton m_fconnextiteRAZ_button;
-        grman::WidgetImage m_fconnextiteRAZ_pics;
-
-        ///Bouton Suppr Arrete
-        grman::WidgetButton m_supprarrete_button;
-        grman::WidgetImage m_supprarrete_pics;
-
     public :
     Thing2();
     void update();

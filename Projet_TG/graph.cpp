@@ -226,27 +226,6 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_suppr_pic.set_pic_name("pics/ajoutsuppr/suppr.jpg");
     m_suppr_button.add_child(m_suppr_pic);
     m_suppr_pic.set_gravity_x(grman::GravityX::Right);
-
-    ///Bouton F. Connexité
-    m_tool_box.add_child(m_fconnextite_button);
-    m_fconnextite_button.set_frame(2,418, 80, 80);
-    m_fconnextite_pic.set_pic_name("pics/connexite/palettedecouleur.jpg");
-    m_fconnextite_button.add_child(m_fconnextite_pic);
-    m_fconnextite_pic.set_gravity_x(grman::GravityX::Right);
-
-    ///Bouton F. Connexité RAZ
-    m_tool_box.add_child(m_fconnextiteRAZ_button);
-    m_fconnextiteRAZ_button.set_frame(2,501, 80, 80);
-    m_fconnextiteRAZ_pics.set_pic_name("pics/connexite/raz.jpg");
-    m_fconnextiteRAZ_button.add_child(m_fconnextiteRAZ_pics);
-    m_fconnextiteRAZ_pics.set_gravity_x(grman::GravityX::Right);
-
-    ///Bouton Suppr arrete
-    m_tool_box.add_child(m_supprarrete_button);
-    m_supprarrete_button.set_frame(2,584, 80,80);
-    m_supprarrete_pics.set_pic_name("pics/ajoutsuppr/supprarrete.jpg");
-    m_supprarrete_button.add_child(m_supprarrete_pics);
-    m_supprarrete_pics.set_gravity_x(grman::GravityX::Right);
 }
 
 
@@ -341,7 +320,68 @@ void Graph::load_graphPOP(int fic)
     fichier.close();
 }
 
+///supression dess sommets
 
+void Graph::del_vertex()
+{
+    int temp;
+
+
+    if(key[KEY_D])
+    {
+        int fin(0);
+        std::cout<<"Indice du sommet présent sur le graph a supprimer : "<<std::endl;
+        std::cin>>temp;
+
+        Vertex &remed =m_vertices.at(temp);
+        std::cout<< "removing vertex "<< temp <<" "<< remed.m_pop <<std::endl;
+
+        if(m_interface && remed.m_interface)
+        {
+            m_interface->m_main_box.remove_child(remed.m_interface->m_top_box);
+            m_vertices.erase(temp);
+        }
+    }
+}
+
+
+
+/// eidx index of edge to remove
+void Graph::test_remove_edge(int eidx)
+{
+
+    if(key[KEY_P])
+    {
+
+        std::cout<<"arrete a del : " <<std::endl;
+        std::cin>> eidx;
+        /// référence vers le Edge à enlever
+        Edge &remed=m_edges.at(eidx);
+
+        if (m_interface && remed.m_interface)
+        {
+
+            m_interface->m_main_box.remove_child( remed.m_interface->m_top_edge );
+        }
+
+        /// Il reste encore à virer l'arc supprimé de la liste des entrants et sortants des 2 sommets to et from !
+        /// References sur les listes de edges des sommets from et to
+        std::vector<int> &vefrom = m_vertices[remed.m_from].m_out;
+        std::vector<int> &veto = m_vertices[remed.m_to].m_in;
+        vefrom.erase( std::remove( vefrom.begin(), vefrom.end(), eidx ), vefrom.end() );
+        veto.erase( std::remove( veto.begin(), veto.end(), eidx ), veto.end() );
+
+        /// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
+        /// Il suffit donc de supprimer l'entrée de la map pour supprimer à la fois l'Edge et le EdgeInterface
+        /// mais malheureusement ceci n'enlevait pas automatiquement l'interface top_edge en tant que child de main_box !
+        m_edges.erase( eidx );
+    }
+
+    /// Tester la cohérence : nombre d'arc entrants et sortants des sommets 1 et 2
+    /*std::cout << m_vertices[remed.m_from].m_in.size() << " " << m_vertices[remed.m_from].m_out.size() << std::endl;
+    std::cout << m_vertices[remed.m_to].m_in.size() << " " << m_vertices[remed.m_to].m_out.size() << std::endl;
+    std::cout << m_edges.size() << std::endl;*/
+}
 ///DISPLAY////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///affichage du graph en console
@@ -393,184 +433,12 @@ void Graph::display_edges()
     //std::cout<<m_nbedges;
 }
 
-bool Graph::update_stepquit()
-{
-    bool a(false);
-    if (m_interface->m_quit_button.clicked())
-    {
-        a=true;
-        return a;
-    }
-}
 
-void Graph::update_stepajout(int path)
-{
-    int temp;
-    bool a(false);
-    if (m_interface->m_ajou_button.clicked())
-    {
-        a=true;
-
-    }
-    if (a==true)
-    {
-        std::cout<<"Indice de votre sommet ? ";
-        std::cin>> temp;
-        std::cout<< std::endl;
-
-        if(temp>=0 && temp<=19)
-        {
-            add_interfaced_vertex(temp,getPop(temp),100,100,getPicName(temp,path));
-        }
-    }
-}
-
-void Graph::update_stepsave(int path)
-{
-    int temp;
-    bool a(false);
-    if (m_interface->m_save_button.clicked())
-    {
-        a=true;
-
-    }
-    if (a==true)
-    {
-        std::string ficName;
-
-        if(path==1)
-        {
-            ficName ="Save/savane.txt";
-        }
-        else if(path==2)
-        {
-
-        }
-        else if(path==3)
-        {
-
-        }
-        std::ofstream fichier(ficName, std::ios::out | std::ios::trunc);
-
-        if(!fichier)
-        {
-            std::cout<<"erreur enregistrement POP"<<std::endl;
-        }
-
-        for(int i(0); i<m_ordre; i++)
-        {
-
-            if(m_vertices[i].m_indice_sommet!= 0)
-            {
-                std::cout<<"sauvgarde eff"<< std::endl;
-                fichier<< m_vertices[i].m_indice_sommet<<" ";
-                fichier<< m_vertices[i].m_value<<" ";
-                fichier<< m_vertices[i].m_pop<<" ";
-                fichier<< m_vertices[i].m_posx<<" ";
-                fichier<< m_vertices[i].m_posy<<" ";
-                fichier<< std::endl;
-            }
-        }
-        fichier.close();
-    }
-
-}
-
-void Graph::update_stepsuppr()
-{
-    int temp;
-    bool a(false);
-    if (m_interface->m_suppr_button.clicked())
-    {
-        a=true;
-
-    }
-    if (a==true)
-    {
-        int fin(0);
-        std::cout<<"Indice du sommet présent sur le graph a supprimer : "<<std::endl;
-        std::cin>>temp;
-        Vertex &remed =m_vertices.at(temp);
-        std::cout<< "removing vertex "<< temp <<" "<< remed.m_pop <<std::endl;
-
-        if(m_interface && remed.m_interface)
-        {
-            m_interface->m_main_box.remove_child(remed.m_interface->m_top_box);
-            m_vertices.erase(temp);
-        }
-    }
-}
-
-void Graph::update_stepfconnexite()
-{
-    int temp;
-    bool a(false);
-    if (m_interface->m_fconnextite_button.clicked())
-    {
-        a=true;
-
-    }
-    if (a==true)
-    {
-        std::cout<<"Bouton forte connexité"<<std::endl;
-    }
-}
-void Graph::update_stepfconnexiteRAZ()
-{
-    int temp;
-    bool a(false);
-    if (m_interface->m_fconnextiteRAZ_button.clicked())
-    {
-        a=true;
-
-    }
-    if (a==true)
-    {
-        std::cout<<"Bouton forte connexité RAZ"<<std::endl;
-    }
-}
-void Graph::update_stepsupprarrete(int eidx)
-{
-        int temp;
-    bool a(false);
-    if (m_interface->m_supprarrete_button.clicked())
-    {
-        a=true;
-
-    }
-    if (a==true)
-    {
-        std::cout<<"arrete a del : " <<std::endl;
-        std::cin>> eidx;
-        /// référence vers le Edge à enlever
-        Edge &remed=m_edges.at(eidx);
-
-        if (m_interface && remed.m_interface)
-        {
-
-            m_interface->m_main_box.remove_child( remed.m_interface->m_top_edge );
-        }
-
-        /// Il reste encore à virer l'arc supprimé de la liste des entrants et sortants des 2 sommets to et from !
-        /// References sur les listes de edges des sommets from et to
-        std::vector<int> &vefrom = m_vertices[remed.m_from].m_out;
-        std::vector<int> &veto = m_vertices[remed.m_to].m_in;
-        vefrom.erase( std::remove( vefrom.begin(), vefrom.end(), eidx ), vefrom.end() );
-        veto.erase( std::remove( veto.begin(), veto.end(), eidx ), veto.end() );
-
-        /// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
-        /// Il suffit donc de supprimer l'entrée de la map pour supprimer à la fois l'Edge et le EdgeInterface
-        /// mais malheureusement ceci n'enlevait pas automatiquement l'interface top_edge en tant que child de main_box !
-        m_edges.erase( eidx );
-    }
-}
 
 /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-void Graph::update(int path)
+void Graph::update()
 {
-    int temp;
-
     if (!m_interface)
         return;
 
@@ -579,7 +447,6 @@ void Graph::update(int path)
 
     for (auto &elt : m_edges)
         elt.second.pre_update();
-        this->set_thickness();
 
     m_interface->m_top_box.update();
 
@@ -589,9 +456,48 @@ void Graph::update(int path)
     for (auto &elt : m_edges)
         elt.second.post_update();
 
+    if (m_interface->m_suppr_button.clicked())
+    {
+        std::cout<<"Ca Marche suppr"<<std::endl;
+    }
+    if (m_interface->m_ajou_button.clicked())
+    {
+        std::cout<<"Ca Marche ajout"<<std::endl;
+    }
+    if (mouse_x<80 && mouse_y<235 && mouse_y>165 && mouse_b==true)
+    {
+        /*while (mouse_x<80 && mouse_y<235 && mouse_y>165 && mouse_b==true)
+        {
+            m_interface->m_pause_button.add_child(m_pause_pic_a);
+        }*/
+    }
     if (m_interface->m_pause_button.clicked())
     {
         std::cout<<"Ca Marche pause"<<std::endl;
+    }
+    if (mouse_x<80 && mouse_y<155 && mouse_y>85)
+    {
+        /*while(mouse_x<80 && mouse_y<155 && mouse_y>85)
+        {
+            m_interface->m_save_button.add_child(m_save_pic_a);
+        }*/
+    }
+
+    if (m_interface->m_save_button.clicked())
+    {
+        std::cout<<"Ca Marche sve"<<std::endl;
+    }
+    if (mouse_x<80 && mouse_y<80)
+    {
+        /*while (mouse_x<80 && mouse_y<80)
+        {
+            m_interface->m_quit_button.add_child(m_quit_cross2);
+        }*/
+    }
+
+    if (m_interface->m_quit_button.clicked())
+    {
+        std::cout<<"Ca Marche"<<std::endl;
     }
 }
 
@@ -625,7 +531,7 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
             }
             else if((m_matP[j][idx] != 0))
             {
-                add_interfaced_edge(m_nbedges,j,idx,m_matP[idx][j]);
+                add_interfaced_edge(m_nbedges,j,idx,m_matP[j][idx]);
             }
         }
     }
@@ -680,8 +586,75 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     }
 }
 
+void Graph::add_vertex(int path)
+{
+    int temp(-1);
+
+    if(key[KEY_H])
+    {
+        std::cout<<"Indice de votre sommet ? ";
+        std::cin>> temp;
+        std::cout<< std::endl;
+
+        if(temp>=0 && temp<=19)
+        {
+            add_interfaced_vertex(temp,getPop(temp),100,100,getPicName(temp,path));
+        }
+    }
+}
+
 
 /// Sauvegarde//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Graph::save(int path)
+{
+
+    if(key[KEY_B])
+    {
+        //std::cout<<"key b";
+        //std::cout<< keypressed();
+        std::string ficName;
+
+        if(path==1)
+        {
+            ficName ="Save/savane.txt";
+            //std::cout<<"path ok"<<std::endl;
+        }
+        else if(path==2)
+        {
+
+        }
+        else if(path==3)
+        {
+
+        }
+
+
+        std::ofstream fichier(ficName, std::ios::out | std::ios::trunc);
+
+        if(!fichier)
+        {
+            std::cout<<"erreur enregistrement POP"<<std::endl;
+        }
+
+        for(int i(0); i<m_ordre; i++)
+        {
+            //std::cout<<"boucle ok i :"<< i <<std::endl;
+
+            if(m_vertices[i].m_indice_sommet!= 0)
+            {
+                std::cout<<"sauvgarde eff"<<  i << std::endl;
+                fichier<< m_vertices[i].m_indice_sommet<<" ";
+                fichier<< m_vertices[i].m_value<<" ";
+                fichier<< m_vertices[i].m_posx<<" ";
+                fichier<< m_vertices[i].m_posy<<" ";
+                fichier<< std::endl;
+            }
+        }
+
+        fichier.close();
+    }
+}
 
 void Graph::loadSave(int path)
 {
@@ -737,7 +710,6 @@ void Graph::loadSave(int path)
     for(int i(0); i<temp1; i++)
     {
         fichier >> temp2;
-        fichier >> temp3;
         fichier >> temp4;
         fichier >> temp5;
         fichier >> temp6;
@@ -781,11 +753,6 @@ std::string Graph::getPicName(int idx, int path)
 
 ///SSETTERSS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Graph::set_thickness()
-{
-    for (auto& elem: m_edges)
-        elem.second.set_thickness(elem.second.m_weight);
-}
 
 std::vector<int> Graph::uneCompoCo(int s, std::vector<std::vector<int>> matrice)
 {
@@ -837,7 +804,7 @@ std::vector<int> Graph::uneCompoCo(int s, std::vector<std::vector<int>> matrice)
 
                 for(int j(0); j<m_ordre; j++)
                 {
-                    if(m_matP[i][j] && !marque[j])
+                    if(matrice[i][j] && !marque[j])
                     {
                         c1[j]=1;
                         ajoute = 1;
@@ -877,64 +844,155 @@ std::vector<int> Graph::uneCompoCo(int s, std::vector<std::vector<int>> matrice)
         }
     }
 
+
+
     for(int i(0); i<m_ordre; i++)
     {
         c[i]=c1[i] & c2[i];
     }
+    c[s]=0;
 
     return c;
 }
 
 void Graph::toutesLesCompo()
 {
-    std::vector<std::vector<int>> matrice;
-    std::vector<int> temp(m_ordre,0);
 
-    std::vector<std::vector<int>> tacb;
-
-    std::vector<int> marque(m_ordre, 0);
-
-
-    for(int i(0); i<m_ordre ; i++)
+    if(key[KEY_L])
     {
-        matrice.push_back(temp);
-        tacb.push_back(temp);
-    }
 
-    for(int i = 0; i < m_ordre; ++i)
-    {
-        for(int j = 0; j < m_ordre ; ++j)
+
+        std::vector<std::vector<int>> matrice;
+        std::vector<int> temp(m_ordre,0);
+        std::vector<int> marque(m_ordre, 0);
+
+
+        for(int i(0); i<m_ordre ; i++)
         {
-            for(int k(0); k<m_edges.size(); k++)
+            matrice.push_back(temp);
+            m_tacb.push_back(temp);
+        }
+
+        for(int i = 0; i < m_ordre; ++i)
+        {
+            for(int j = 0; j < m_ordre ; ++j)
             {
-                if(m_edges[k].m_from == i && m_edges[k].m_to == j)
+                for(int k(0); k<m_edges.size(); k++)
                 {
-                    matrice[i][j]=1;
+                    if(m_edges[k].m_from == i && m_edges[k].m_to == j)
+                    {
+                        matrice[i][j]=1;
+                    }
                 }
             }
         }
-    }
 
-    for(int i = 0; i < m_ordre; ++i)
-    {
-        if(!marque[i])
+        for(int i = 0; i < m_ordre; ++i)
         {
-            tacb[i]= uneCompoCo(i,matrice);
+            if(!marque[i])
+            {
+                m_tacb[i]= uneCompoCo(i,matrice);
+            }
         }
+
+        colorer();
+
+        /*for(int i(0);i<m_ordre;i++)
+        {
+            for(int j(0); j<m_ordre;j++)
+            {
+                std::cout<<m_tacb[i][j];
+            }
+            std::cout<<std::endl;
+        }*/
+
     }
+}
+void Graph::colorer()
+{
+    int cpt(0);
 
     for(int i(0); i<m_ordre; i++)
     {
         for(int j(0); j<m_ordre; j++)
         {
-            std::cout<<tacb[i][j];
+            if(m_matP[i][j] !=0 && m_tacb[i][j] !=0 )
+            {
+                m_vertices[cpt].m_interface->m_top_box.set_bg_color(FUCHSIA);
+            }
         }
-        std::cout<<std::endl;
+        cpt++;
     }
 
-
-
+    //system("PAUSE");
 }
+
+int Graph::calcul_K(int s)
+{
+    int K(0);
+
+    for(int i(0); i<m_edges.size();i++)
+    {
+        if(m_edges[i].m_to == s  )
+        {
+             K = K + (m_edges[i].m_weight * m_vertices[m_edges[i].m_from].getValue());
+        }
+    }
+
+    return K;
+}
+
+int Graph::calcul_Coef(int s)
+{
+    int K=(0);
+
+    for(int i(0); i<m_edges.size();i++)
+    {
+        if(m_edges[i].m_from == s  )
+        {
+             K = K + (m_edges[i].m_weight * m_vertices[m_edges[i].m_to].getValue());
+        }
+    }
+
+    return K;
+}
+
+
+void Graph::retrachement()
+{
+    float temp;
+    float r(0.001);
+
+    //std::cout<<r;
+
+    //display_edges();
+
+    //display_vertices();
+
+    for( int i(0);i<m_vertices.size();i++)
+    {
+        if(m_vertices[i].m_indice_sommet != 0 && m_vertices[i].m_in.size() !=0)
+        {
+
+        temp = m_vertices[i].getValue();
+        temp =  temp + r * m_vertices[i].getValue() * ( 1 - ( temp / calcul_K(m_vertices[i].m_indice_sommet) ) ) - calcul_Coef(i);
+
+        std::cout<< "temp : "<< temp<< std::endl;
+        std::cout<< "calcul coef : "<< calcul_Coef(i)<< std::endl;
+        std::cout<< "K : "<< calcul_K(i) << std::endl;
+
+        m_vertices[i].setValue(temp);
+
+        }
+
+    }
+}
+
+
+
+/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+/// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Thing2::Thing2()
 {
@@ -1001,27 +1059,6 @@ Thing2::Thing2()
     m_suppr_pic.set_pic_name("pics/ajoutsuppr/suppr.jpg");
     m_suppr_button.add_child(m_suppr_pic);
     m_suppr_pic.set_gravity_x(grman::GravityX::Right);
-
-    ///Bouton F. Connexité
-    m_tool_box.add_child(m_fconnextite_button);
-    m_fconnextite_button.set_frame(2,418, 80, 80);
-    m_fconnextite_pic.set_pic_name("pics/connexite/palettedecouleur.jpg");
-    m_fconnextite_button.add_child(m_fconnextite_pic);
-    m_fconnextite_pic.set_gravity_x(grman::GravityX::Right);
-
-    ///Bouton F. Connexité RAZ
-    m_tool_box.add_child(m_fconnextiteRAZ_button);
-    m_fconnextiteRAZ_button.set_frame(2,501, 80, 80);
-    m_fconnextiteRAZ_pics.set_pic_name("pics/connexite/raz.jpg");
-    m_fconnextiteRAZ_button.add_child(m_fconnextite_pic);
-    m_fconnextite_pic.set_gravity_x(grman::GravityX::Right);
-
-    ///Bouton Suppr arrete
-    m_tool_box.add_child(m_supprarrete_button);
-    m_supprarrete_button.set_frame(2,584, 80,80);
-    m_supprarrete_pics.set_pic_name("pics/ajoutsuppr/supprarrete.jpg");
-    m_supprarrete_button.add_child(m_supprarrete_pics);
-    m_supprarrete_pics.set_gravity_x(grman::GravityX::Right);
 }
 
 void Thing2::update()
