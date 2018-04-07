@@ -579,6 +579,7 @@ void Graph::update(int path)
 
     for (auto &elt : m_edges)
         elt.second.pre_update();
+        this->set_thickness();
 
     m_interface->m_top_box.update();
 
@@ -780,6 +781,11 @@ std::string Graph::getPicName(int idx, int path)
 
 ///SSETTERSS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void Graph::set_thickness()
+{
+    for (auto& elem: m_edges)
+        elem.second.set_thickness(elem.second.m_weight);
+}
 
 std::vector<int> Graph::uneCompoCo(int s, std::vector<std::vector<int>> matrice)
 {

@@ -252,6 +252,10 @@ class Edge
         Edge (int from=0, int to=0, double weight=0, EdgeInterface *interface=nullptr) : m_from(from), m_to(to),
             m_weight(weight), m_interface(interface)  {  }
 
+
+        void set_thickness(float _t) {m_interface->m_top_edge.set_thickness(_t);}
+
+
         /// Edge étant géré par Graph ce sera la méthode update de graph qui appellera
         /// le pre_update et post_update de Edge (pas directement la boucle de jeu)
         /// Voir l'implémentation Graph::update dans le .cpp
@@ -366,6 +370,8 @@ class Graph
 
         ///regroupe les fonctions d'initalisation
         void init(int path);
+
+        void set_thickness();
 
         /// Les constructeurs sont à compléter selon vos besoin...
         /// Ici on ne donne qu'un seul constructeur qui peut utiliser une interface
