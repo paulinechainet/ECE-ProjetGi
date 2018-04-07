@@ -355,7 +355,7 @@ void Graph::test_remove_edge(int eidx)
 
         std::cout<<"arrete a del : " <<std::endl;
         std::cin>> eidx;
-    /// référence vers le Edge à enlever
+        /// référence vers le Edge à enlever
         Edge &remed=m_edges.at(eidx);
 
         if (m_interface && remed.m_interface)
@@ -455,7 +455,7 @@ void Graph::update()
 
     for (auto &elt : m_edges)
         elt.second.post_update();
-            if (m_interface->m_suppr_button.clicked())
+    if (m_interface->m_suppr_button.clicked())
     {
         std::cout<<"Ca Marche suppr"<<std::endl;
     }
@@ -530,7 +530,7 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
             }
             else if((m_matP[j][idx] != 0))
             {
-               add_interfaced_edge(m_nbedges,j,idx,m_matP[idx][j]);
+                add_interfaced_edge(m_nbedges,j,idx,m_matP[idx][j]);
             }
         }
     }
@@ -636,7 +636,7 @@ void Graph::save(int path)
             std::cout<<"erreur enregistrement POP"<<std::endl;
         }
 
-        for(int i(0); i<m_ordre;i++)
+        for(int i(0); i<m_ordre; i++)
         {
             //std::cout<<"boucle ok i :"<< i <<std::endl;
 
@@ -661,68 +661,68 @@ void Graph::loadSave(int path)
 
     int temp1(0),temp2(0),temp3(0),temp4(0),temp5(0),temp6(0);
 
-        std::string ficName;
-        std::string ligne;
-        std::string name;
-        std::vector<int> test;
+    std::string ficName;
+    std::string ligne;
+    std::string name;
+    std::vector<int> test;
 
-        if(path==1)
+    if(path==1)
+    {
+        ficName ="Save/savane.txt";
+        //std::cout<<"path ok"<<std::endl;    if(path==1)
+
+        name="pics/savane/" ;
+
+
+    }
+    else if(path==2)
+    {
+
+    }
+    else if(path==3)
+    {
+
+    }
+
+    std::ifstream fichier(ficName, std::ios::in);
+
+    if(!fichier.is_open())  // si l'ouverture echoue
+    {
+        std::cout << "Erreur à l'ouverture du fichier save !" << std::endl;
+    }
+
+    while(std::getline(fichier, ligne))
+    {
+        temp1++;
+        //std::cout<< temp1;
+    }
+
+
+
+    fichier.clear();
+    fichier.seekg(0,std::ios::beg);
+
+
+    //temp1= 6;
+
+    std::cout<< temp1;
+
+    for(int i(0); i<temp1; i++)
+    {
+        fichier >> temp2;
+        fichier >> temp3;
+        fichier >> temp4;
+        fichier >> temp5;
+        fichier >> temp6;
+
+        if(temp2!=0)
         {
-            ficName ="Save/savane.txt";
-            //std::cout<<"path ok"<<std::endl;    if(path==1)
-
-            name="pics/savane/" ;
-
-
-        }
-        else if(path==2)
-        {
-
-        }
-        else if(path==3)
-        {
-
-        }
-
-        std::ifstream fichier(ficName, std::ios::in);
-
-        if(!fichier.is_open())  // si l'ouverture echoue
-        {
-            std::cout << "Erreur à l'ouverture du fichier save !" << std::endl;
-        }
-
-        while(std::getline(fichier, ligne))
-        {
-            temp1++;
-            //std::cout<< temp1;
-        }
-
-
-
-        fichier.clear();
-        fichier.seekg(0,std::ios::beg);
-
-
-        //temp1= 6;
-
-        std::cout<< temp1;
-
-        for(int i(0);i<temp1;i++)
-        {
-            fichier >> temp2;
-            fichier >> temp3;
-            fichier >> temp4;
-            fichier >> temp5;
-            fichier >> temp6;
-
-            if(temp2!=0)
-            {
-                add_interfaced_vertex(temp2,temp4,temp5,temp6, name+ std::to_string(temp2) + ".jpg" );
-            }
-
+            add_interfaced_vertex(temp2,temp4,temp5,temp6, name+ std::to_string(temp2) + ".jpg" );
         }
 
-        fichier.close();
+    }
+
+    fichier.close();
 
 
 
@@ -760,7 +760,7 @@ std::vector<int> Graph::uneCompoCo(int s, std::vector<std::vector<int>> matrice)
     std::vector<std::vector<int>> trans;
     std::vector<int> temp(m_ordre,0);
 
-   ///variables loacales
+    ///variables loacales
     std::vector<int> c1(m_ordre,0);
     std::vector<int> c2(m_ordre,0);
     std::vector<int> c(m_ordre,0);
@@ -797,13 +797,13 @@ std::vector<int> Graph::uneCompoCo(int s, std::vector<std::vector<int>> matrice)
     {
         ajoute = 0;
 
-        for(int i(0);i<m_ordre;i++)
+        for(int i(0); i<m_ordre; i++)
         {
             if(!marque[i] && c1[i])
             {
                 marque[i]=1;
 
-                for(int j(0);j<m_ordre;j++)
+                for(int j(0); j<m_ordre; j++)
                 {
                     if(m_matP[i][j] && !marque[j])
                     {
@@ -815,7 +815,7 @@ std::vector<int> Graph::uneCompoCo(int s, std::vector<std::vector<int>> matrice)
         }
     }
 
-    for(int i(0);i<m_ordre;i++)
+    for(int i(0); i<m_ordre; i++)
     {
         marque[i]=0;
     }
@@ -827,13 +827,13 @@ std::vector<int> Graph::uneCompoCo(int s, std::vector<std::vector<int>> matrice)
     {
         ajoute = 0;
 
-        for(int i(0);i<m_ordre;i++)
+        for(int i(0); i<m_ordre; i++)
         {
             if(!marque[i] && c2[i])
             {
                 marque[i]=1;
 
-                for(int j(0);j<m_ordre;j++)
+                for(int j(0); j<m_ordre; j++)
                 {
                     if(trans[i][j] && !marque[j])
                     {
@@ -845,64 +845,91 @@ std::vector<int> Graph::uneCompoCo(int s, std::vector<std::vector<int>> matrice)
         }
     }
 
-    for(int i(0);i<m_ordre;i++)
+
+
+    for(int i(0); i<m_ordre; i++)
     {
         c[i]=c1[i] & c2[i];
     }
+    c[s]=0;
 
     return c;
 }
 
 void Graph::toutesLesCompo()
 {
-    std::vector<std::vector<int>> matrice;
-    std::vector<int> temp(m_ordre,0);
 
-    std::vector<std::vector<int>> tacb;
-
-    std::vector<int> marque(m_ordre, 0);
-
-
-    for(int i(0);i<m_ordre ; i++)
+    if(key[KEY_L])
     {
-        matrice.push_back(temp);
-        tacb.push_back(temp);
-    }
 
-    for(int i = 0; i < m_ordre; ++i)
-    {
-        for(int j = 0; j < m_ordre ; ++j)
+
+        std::vector<std::vector<int>> matrice;
+        std::vector<int> temp(m_ordre,0);
+        std::vector<int> marque(m_ordre, 0);
+
+
+        for(int i(0); i<m_ordre ; i++)
         {
-            for(int k(0); k<m_edges.size(); k++)
+            matrice.push_back(temp);
+            m_tacb.push_back(temp);
+        }
+
+        for(int i = 0; i < m_ordre; ++i)
+        {
+            for(int j = 0; j < m_ordre ; ++j)
             {
-                if(m_edges[k].m_from == i && m_edges[k].m_to == j)
+                for(int k(0); k<m_edges.size(); k++)
                 {
-                    matrice[i][j]=1;
+                    if(m_edges[k].m_from == i && m_edges[k].m_to == j)
+                    {
+                        matrice[i][j]=1;
+                    }
                 }
             }
         }
-    }
 
-    for(int i = 0; i < m_ordre; ++i)
-    {
-        if(!marque[i])
+        for(int i = 0; i < m_ordre; ++i)
         {
-            tacb[i]= uneCompoCo(i,matrice);
+            if(!marque[i])
+            {
+                m_tacb[i]= uneCompoCo(i,matrice);
+            }
         }
-    }
 
-    for(int i(0);i<m_ordre;i++)
-    {
-        for(int j(0); j<m_ordre;j++)
+        colorer();
+
+        /*for(int i(0);i<m_ordre;i++)
         {
-            std::cout<<tacb[i][j];
-        }
-        std::cout<<std::endl;
+            for(int j(0); j<m_ordre;j++)
+            {
+                std::cout<<m_tacb[i][j];
+            }
+            std::cout<<std::endl;
+        }*/
+
     }
-
-
-
 }
+void Graph::colorer()
+{
+    int cpt(0);
+
+    for(int i(0); i<m_ordre; i++)
+    {
+        for(int j(0); j<m_ordre; j++)
+        {
+            if(m_matP[i][j] !=0 && m_tacb[i][j] !=0 )
+            {
+                m_vertices[cpt].m_interface->m_top_box.set_bg_color(FUCHSIA);
+            }
+        }
+        cpt++;
+    }
+
+    system("PAUSE");
+}
+
+
+
 
 Thing2::Thing2()
 {

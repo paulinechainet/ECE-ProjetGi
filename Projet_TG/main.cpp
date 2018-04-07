@@ -25,10 +25,8 @@ int main()
     Menu menu;
     //Choix du menu
     choix_menu=menu.display_menu1();
-    std::cout<<choix_menu<<std::endl;
+    //std::cin>>  choix_menu;
     path_Matrice=choix_menu;
-
-
 
         Graph g;
         g.init(path_Matrice);
@@ -47,6 +45,8 @@ int main()
 
             g.save(path_Matrice);///B
             g.test_remove_edge(sommet);///P
+            g.toutesLesCompo();///L
+
 
 
             /// Mise à jour générale (clavier/souris/buffer etc...)
@@ -57,7 +57,7 @@ int main()
         g.display_edges();
 
 
-        g.toutesLesCompo();
+
 
 
         std::cout<< "Quitter le jeu ? 1. oui 0.non  "<<std::endl;

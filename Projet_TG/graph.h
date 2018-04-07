@@ -348,6 +348,8 @@ class Graph
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<GraphInterface> m_interface = nullptr;
 
+        std::vector<std::vector<int>> m_tacb;
+
 
     public:
 
@@ -406,8 +408,8 @@ class Graph
 
         ///fortement connexe
         std::vector<int> uneCompoCo(int s, std::vector<std::vector<int>> matAdja);
-
         void toutesLesCompo();
+        void colorer();
 };
 
 class Thing2
