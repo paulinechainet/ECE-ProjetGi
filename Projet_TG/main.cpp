@@ -15,6 +15,7 @@ int main()
     char a='v';
     int sommet;
     int choix_menu;
+    bool fin_boucle(false);
 
     /// A appeler en 1er avant d'instancier des objets graphiques etc...
     grman::init();
@@ -25,8 +26,10 @@ int main()
     Menu menu;
     //Choix du menu
     choix_menu=menu.display_menu1();
-    //std::cin>>  choix_menu;
+    std::cout<<choix_menu<<std::endl;
     path_Matrice=choix_menu;
+
+
 
         Graph g;
         g.init(path_Matrice);
@@ -35,18 +38,17 @@ int main()
 
         /// Vous gardez la main sur la "boucle de jeu"while(fin==0)
         /// ( contrairement à des frameworks plus avancés )
-        while ( !key[KEY_ESC] )
+
+        while ( fin_boucle==false )
         {
             /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
-            g.update();
+            g.update(path_Matrice);
+            fin_boucle=g.update_stepquit();
+            g.update_stepajout(path_Matrice);
+            g.update_stepsave(path_Matrice);
+            g.update_stepsuppr();
 
-            g.add_vertex(path_Matrice);///H
-            g.del_vertex();///D
-
-            g.save(path_Matrice);///B
             g.test_remove_edge(sommet);///P
-            g.toutesLesCompo();///L
-
 
 
             /// Mise à jour générale (clavier/souris/buffer etc...)
@@ -57,7 +59,7 @@ int main()
         g.display_edges();
 
 
-
+        g.toutesLesCompo();
 
 
         std::cout<< "Quitter le jeu ? 1. oui 0.non  "<<std::endl;

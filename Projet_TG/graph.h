@@ -348,8 +348,6 @@ class Graph
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<GraphInterface> m_interface = nullptr;
 
-        std::vector<std::vector<int>> m_tacb;
-
 
     public:
 
@@ -375,11 +373,7 @@ class Graph
         ///affiche m_matPop
         void show_graph_consolePOP();
 
-        ///Methode pour ajouter les ssommets et arretes a partir de m_matP et m_matPop
-        void add_vertex(int path);
-
         ///Methode pour supprimer des sommets
-        void del_vertex();
         void test_remove_edge(int eidx);
 
         ///aff liste sommets et arretes
@@ -387,13 +381,17 @@ class Graph
         void display_edges();
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-        void update();
+        void update(int path);
+
+        ///Méthode Bouton
+        bool update_stepquit();
+        void update_stepajout(int path);
+        void update_stepsave(int path);
+        void update_stepsuppr();
+        void update_overall(int path);
 
         ///méthode principale
         void displayAlleg(int path);
-
-        ///Méthodes pour la sauvegarde des ddifférents fic
-        void save(int path);
 
         ///pour load les sauvegardes
         void loadSave(int path);
@@ -408,8 +406,8 @@ class Graph
 
         ///fortement connexe
         std::vector<int> uneCompoCo(int s, std::vector<std::vector<int>> matAdja);
+
         void toutesLesCompo();
-        void colorer();
 };
 
 class Thing2
