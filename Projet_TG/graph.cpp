@@ -226,6 +226,27 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_suppr_pic.set_pic_name("pics/ajoutsuppr/suppr.jpg");
     m_suppr_button.add_child(m_suppr_pic);
     m_suppr_pic.set_gravity_x(grman::GravityX::Right);
+
+    ///Bouton F. Connexité
+    m_tool_box.add_child(m_fconnextite_button);
+    m_fconnextite_button.set_frame(2,418, 80, 80);
+    m_fconnextite_pic.set_pic_name("pics/connexite/palettedecouleur.jpg");
+    m_fconnextite_button.add_child(m_fconnextite_pic);
+    m_fconnextite_pic.set_gravity_x(grman::GravityX::Right);
+
+    ///Bouton F. Connexité RAZ
+    m_tool_box.add_child(m_fconnextiteRAZ_button);
+    m_fconnextiteRAZ_button.set_frame(2,501, 80, 80);
+    m_fconnextiteRAZ_pics.set_pic_name("pics/connexite/raz.jpg");
+    m_fconnextiteRAZ_button.add_child(m_fconnextiteRAZ_pics);
+    m_fconnextiteRAZ_pics.set_gravity_x(grman::GravityX::Right);
+
+    ///Bouton Suppr arrete
+    m_tool_box.add_child(m_supprarrete_button);
+    m_supprarrete_button.set_frame(2,504, 80,80);
+    m_supprarrete_pics.set_pic_name("pics/ajoutsuppr/supprarrete.jpg");
+    m_supprarrete_button.add_child(m_supprarrete_pics);
+    m_supprarrete_pics.set_gravity_x(grman::GravityX::Right);
 }
 
 
@@ -321,42 +342,6 @@ void Graph::load_graphPOP(int fic)
 }
 
 
-/// eidx index of edge to remove
-void Graph::test_remove_edge(int eidx)
-{
-
-    if(key[KEY_P])
-    {
-
-        std::cout<<"arrete a del : " <<std::endl;
-        std::cin>> eidx;
-        /// référence vers le Edge à enlever
-        Edge &remed=m_edges.at(eidx);
-
-        if (m_interface && remed.m_interface)
-        {
-
-            m_interface->m_main_box.remove_child( remed.m_interface->m_top_edge );
-        }
-
-        /// Il reste encore à virer l'arc supprimé de la liste des entrants et sortants des 2 sommets to et from !
-        /// References sur les listes de edges des sommets from et to
-        std::vector<int> &vefrom = m_vertices[remed.m_from].m_out;
-        std::vector<int> &veto = m_vertices[remed.m_to].m_in;
-        vefrom.erase( std::remove( vefrom.begin(), vefrom.end(), eidx ), vefrom.end() );
-        veto.erase( std::remove( veto.begin(), veto.end(), eidx ), veto.end() );
-
-        /// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
-        /// Il suffit donc de supprimer l'entrée de la map pour supprimer à la fois l'Edge et le EdgeInterface
-        /// mais malheureusement ceci n'enlevait pas automatiquement l'interface top_edge en tant que child de main_box !
-        m_edges.erase( eidx );
-    }
-
-    /// Tester la cohérence : nombre d'arc entrants et sortants des sommets 1 et 2
-    /*std::cout << m_vertices[remed.m_from].m_in.size() << " " << m_vertices[remed.m_from].m_out.size() << std::endl;
-    std::cout << m_vertices[remed.m_to].m_in.size() << " " << m_vertices[remed.m_to].m_out.size() << std::endl;
-    std::cout << m_edges.size() << std::endl;*/
-}
 ///DISPLAY////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///affichage du graph en console
@@ -516,6 +501,69 @@ void Graph::update_stepsuppr()
     }
 }
 
+void Graph::update_stepfconnexite()
+{
+    int temp;
+    bool a(false);
+    if (m_interface->m_fconnextite_button.clicked())
+    {
+        a=true;
+
+    }
+    if (a==true)
+    {
+        std::cout<<"Bouton forte connexité"<<std::endl;
+    }
+}
+void Graph::update_stepfconnexiteRAZ()
+{
+    int temp;
+    bool a(false);
+    if (m_interface->m_fconnextiteRAZ_button.clicked())
+    {
+        a=true;
+
+    }
+    if (a==true)
+    {
+        std::cout<<"Bouton forte connexité RAZ"<<std::endl;
+    }
+}
+void Graph::update_stepsupprarrete(int eidx)
+{
+        int temp;
+    bool a(false);
+    if (m_interface->m_supprarrete_button.clicked())
+    {
+        a=true;
+
+    }
+    if (a==true)
+    {
+        std::cout<<"arrete a del : " <<std::endl;
+        std::cin>> eidx;
+        /// référence vers le Edge à enlever
+        Edge &remed=m_edges.at(eidx);
+
+        if (m_interface && remed.m_interface)
+        {
+
+            m_interface->m_main_box.remove_child( remed.m_interface->m_top_edge );
+        }
+
+        /// Il reste encore à virer l'arc supprimé de la liste des entrants et sortants des 2 sommets to et from !
+        /// References sur les listes de edges des sommets from et to
+        std::vector<int> &vefrom = m_vertices[remed.m_from].m_out;
+        std::vector<int> &veto = m_vertices[remed.m_to].m_in;
+        vefrom.erase( std::remove( vefrom.begin(), vefrom.end(), eidx ), vefrom.end() );
+        veto.erase( std::remove( veto.begin(), veto.end(), eidx ), veto.end() );
+
+        /// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
+        /// Il suffit donc de supprimer l'entrée de la map pour supprimer à la fois l'Edge et le EdgeInterface
+        /// mais malheureusement ceci n'enlevait pas automatiquement l'interface top_edge en tant que child de main_box !
+        m_edges.erase( eidx );
+    }
+}
 
 /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
@@ -947,6 +995,27 @@ Thing2::Thing2()
     m_suppr_pic.set_pic_name("pics/ajoutsuppr/suppr.jpg");
     m_suppr_button.add_child(m_suppr_pic);
     m_suppr_pic.set_gravity_x(grman::GravityX::Right);
+
+    ///Bouton F. Connexité
+    m_tool_box.add_child(m_fconnextite_button);
+    m_fconnextite_button.set_frame(2,418, 80, 80);
+    m_fconnextite_pic.set_pic_name("pics/connexite/palettedecouleur.jpg");
+    m_fconnextite_button.add_child(m_fconnextite_pic);
+    m_fconnextite_pic.set_gravity_x(grman::GravityX::Right);
+
+    ///Bouton F. Connexité RAZ
+    m_tool_box.add_child(m_fconnextiteRAZ_button);
+    m_fconnextiteRAZ_button.set_frame(2,501, 80, 80);
+    m_fconnextiteRAZ_pics.set_pic_name("pics/connexite/raz.jpg");
+    m_fconnextiteRAZ_button.add_child(m_fconnextite_pic);
+    m_fconnextite_pic.set_gravity_x(grman::GravityX::Right);
+
+    ///Bouton Suppr arrete
+    m_tool_box.add_child(m_supprarrete_button);
+    m_supprarrete_button.set_frame(2,504, 80,80);
+    m_supprarrete_pics.set_pic_name("pics/ajoutsuppr/supprarrete.jpg");
+    m_supprarrete_button.add_child(m_supprarrete_pics);
+    m_supprarrete_pics.set_gravity_x(grman::GravityX::Right);
 }
 
 void Thing2::update()

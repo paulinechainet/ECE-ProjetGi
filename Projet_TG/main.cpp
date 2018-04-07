@@ -47,8 +47,9 @@ int main()
             g.update_stepajout(path_Matrice);
             g.update_stepsave(path_Matrice);
             g.update_stepsuppr();
-
-            g.test_remove_edge(sommet);///P
+            g.update_stepfconnexite();
+            g.update_stepfconnexiteRAZ();
+            g.update_stepsupprarrete(sommet);
 
 
             /// Mise à jour générale (clavier/souris/buffer etc...)

@@ -316,6 +316,19 @@ class GraphInterface
         grman::WidgetImage m_ajou_pic;
         grman::WidgetImage m_suppr_pic;
 
+        ///Bouton Forte connexité couleur
+
+        grman::WidgetButton m_fconnextite_button;
+        grman::WidgetImage  m_fconnextite_pic;
+
+        ///Bouton Forte connexité RAZ
+        grman::WidgetButton m_fconnextiteRAZ_button;
+        grman::WidgetImage m_fconnextiteRAZ_pics;
+
+        ///Bouton Suppr Arrete
+        grman::WidgetButton m_supprarrete_button;
+        grman::WidgetImage m_supprarrete_pics;
+
     public :
 
         // Le constructeur met en place les éléments de l'interface
@@ -373,9 +386,6 @@ class Graph
         ///affiche m_matPop
         void show_graph_consolePOP();
 
-        ///Methode pour supprimer des sommets
-        void test_remove_edge(int eidx);
-
         ///aff liste sommets et arretes
         void display_vertices();
         void display_edges();
@@ -385,11 +395,12 @@ class Graph
 
         ///Méthode Bouton
         bool update_stepquit();
-        void update_stepajout(int path);
-        void update_stepsave(int path);
-        void update_stepsuppr();
-        void update_overall(int path);
-
+        void update_stepajout(int path);//Bouton Ajout
+        void update_stepsave(int path);//Bouton Save
+        void update_stepsuppr();//Bouton Suppr
+        void update_stepfconnexite();//Bouton F. Connexité
+        void update_stepfconnexiteRAZ();//Bouton RAZ F. Connexité
+        void update_stepsupprarrete(int eidx);//Suppr Arrete
         ///méthode principale
         void displayAlleg(int path);
 
@@ -448,6 +459,20 @@ private :
         grman::WidgetButton m_suppr_button;
         grman::WidgetImage m_ajou_pic;
         grman::WidgetImage m_suppr_pic;
+
+        ///Bouton Forte connexité couleur
+
+        grman::WidgetButton m_fconnextite_button;
+        grman::WidgetImage  m_fconnextite_pic;
+
+        ///Bouton Forte connexité RAZ
+        grman::WidgetButton m_fconnextiteRAZ_button;
+        grman::WidgetImage m_fconnextiteRAZ_pics;
+
+        ///Bouton Suppr Arrete
+        grman::WidgetButton m_supprarrete_button;
+        grman::WidgetImage m_supprarrete_pics;
+
     public :
     Thing2();
     void update();
