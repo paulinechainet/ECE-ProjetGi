@@ -44,11 +44,8 @@ int main()
             g.update();
 
             g.regroup(path_Matrice);
+s
 
-            if(key[KEY_O])
-            {
-                g.retrachement();
-            }
 
             /// Mise à jour générale (clavier/souris/buffer etc...)
             grman::mettre_a_jour();

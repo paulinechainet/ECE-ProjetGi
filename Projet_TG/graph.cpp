@@ -265,11 +265,12 @@ void Graph::load_graph(int fic)
     else if(fic==2)
     {
         fic_name ="Matrice_P/eau.txt";
-        m_ordre = 10;
+        m_ordre = 11;
     }
     else if(fic==3)
     {
-
+        fic_name ="Matrice_P/fish.txt";
+        m_ordre = 7;
     }
     else
     {
@@ -297,15 +298,6 @@ void Graph::load_graph(int fic)
         }
     }
 
-    for(int i(0); i<m_ordre ; i++)
-    {
-        for(int j(0); j<m_ordre ; j++)
-        {
-            std::cout<<m_matP[i][j]<<" ";
-        }
-        std::cout<<std::endl;
-    }
-
     fichier.close();
 }
 
@@ -323,11 +315,12 @@ void Graph::load_graphPOP(int fic)
     else if(fic==2)
     {
         fic_name ="Population/eau.txt";
-        m_ordre=10;
+        m_ordre=11;
     }
     else if(fic==3)
     {
-
+        fic_name ="Population/fish.txt";
+        m_ordre = 7;
     }
     else
     {
@@ -446,10 +439,7 @@ void Graph::update()
     for (auto &elt : m_edges)
         elt.second.post_update();
 
-    if (m_interface->m_pause_button.clicked())
-    {
-        std::cout<<"Ca Marche pause"<<std::endl;
-    }
+
 }
 
 
@@ -554,15 +544,6 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
         }
     }
 
-    /*for(const auto& elem:m_vertices[idx].m_in)
-    {
-        std::cout << elem << " sommets qui in  m_in de "<<idx <<std::endl;
-    }
-
-    for(const auto& elem:m_vertices[idx].m_out)
-    {
-        std::cout << elem << " sommets qui out de m_out de   "<<  idx <<std::endl;
-    }*/
 }
 
 /// Aide à l'ajout d'arcs interfacés
@@ -622,6 +603,7 @@ void Graph::update_stepajout(int path)
         if(temp>=0 && temp<=19)
         {
             add_interfaced_vertex(temp,getPop(temp),100,100,getPicName(temp,path));
+            std::cout<< getPicName(temp,path)<<"coucou";
         }
     }
 }
@@ -654,7 +636,7 @@ void Graph::update_stepsave(int path)
         }
         else if(path==3)
         {
-
+            ficName ="Save/fish.txt";
         }
 
 
@@ -706,7 +688,8 @@ void Graph::loadSave(int path)
     }
     else if(path==3)
     {
-
+        ficName ="Save/fish.txt";
+        name="pics/fish/" ;
     }
 
     std::ifstream fichier(ficName, std::ios::in);
@@ -725,7 +708,7 @@ void Graph::loadSave(int path)
     fichier.clear();
     fichier.seekg(0,std::ios::beg);
 
-    std::cout<< temp1;
+    //std::cout<< temp1;
 
     for(int i(0); i<temp1; i++)
     {
@@ -763,6 +746,10 @@ std::string Graph::getPicName(int idx, int path)
     if(path==2)
     {
         name="pics/eau/" + std::to_string(idx) + ".jpg" ;
+    }
+        if(path==3)
+    {
+        name="pics/fish/" + std::to_string(idx) + ".jpg" ;
     }
 
     return name;
@@ -980,12 +967,32 @@ void Graph::update_stepfconnexiteRAZ()
     }
 }
 
+void Graph::update_stepPause()
+{
+
+    int temp;
+    bool a(false);
+    if (m_interface->m_pause_button.clicked())
+    {
+        a=true;
+
+    }
+
+    if (a==true)
+    {
+        m_cpt++;
+        std::cout << m_cpt;
+    }
+
+
+}
+
 
 
 
 
 ///Dynamique    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-int Graph::calcul_K(int s)
+float Graph::calcul_K(int s)
 {
     int K(0);
 
@@ -994,13 +1001,14 @@ int Graph::calcul_K(int s)
         if(m_edges[i].m_to == s  )
         {
             K = K + (m_edges[i].m_weight * m_vertices[m_edges[i].m_from].getValue());
+            //std::cout<< "k K : "<< K << std::endl;
         }
     }
 
     return K;
 }
 
-int Graph::calcul_Coef(int s)
+float Graph::calcul_Coef(int s)
 {
     int K=(0);
 
@@ -1009,6 +1017,7 @@ int Graph::calcul_Coef(int s)
         if(m_edges[i].m_from == s  )
         {
             K = K + (m_edges[i].m_weight * m_vertices[m_edges[i].m_to].getValue());
+            //std::cout<< "k coef : "<< K << std::endl;
         }
     }
 
@@ -1018,13 +1027,7 @@ int Graph::calcul_Coef(int s)
 void Graph::retrachement()
 {
     float temp;
-    float r(0.001);
-
-    //std::cout<<r;
-
-    //display_edges();
-
-    //display_vertices();
+    float r(0.05);
 
     for( int i(0); i<m_vertices.size(); i++)
     {
@@ -1032,13 +1035,11 @@ void Graph::retrachement()
         {
 
             temp = m_vertices[i].getValue();
-            temp =  temp + r * m_vertices[i].getValue() * ( 1 - ( temp / calcul_K(m_vertices[i].m_indice_sommet) ) ) - calcul_Coef(i);
-
-            std::cout<< "temp : "<< temp<< std::endl;
-            std::cout<< "calcul coef : "<< calcul_Coef(i)<< std::endl;
-            std::cout<< "K : "<< calcul_K(i) << std::endl;
+            temp =  temp + ( r * m_vertices[i].getValue() * ( 1 - ( temp / calcul_K(m_vertices[i].m_indice_sommet) ) ) ) - 1.5;//calcul_Coef(i);
 
             m_vertices[i].setValue(temp);
+
+            temp=0;
 
         }
 
@@ -1057,6 +1058,13 @@ void Graph::regroup(int path_Matrice)
     update_stepfconnexite();///  ok
     update_stepfconnexiteRAZ();///  ok
     update_stepsupprarrete();///ok
+    update_stepPause();
+
+    //pause
+    if(m_cpt%2)
+    {
+        retrachement();
+    }
 }
 
 

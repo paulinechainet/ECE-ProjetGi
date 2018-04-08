@@ -148,7 +148,7 @@ class Vertex
         int m_indice_sommet;
 
         ///
-        int m_value;
+        float m_value;
 
         /// Nombre d'individu
         int m_pop;
@@ -345,6 +345,8 @@ class Graph
 {
     private :
 
+        int m_cpt;
+
         int m_nbedges;
 
         ///matrice pondérée
@@ -377,7 +379,7 @@ class Graph
 
         /// Les constructeurs sont à compléter selon vos besoin...
         /// Ici on ne donne qu'un seul constructeur qui peut utiliser une interface
-        Graph (GraphInterface *interface=nullptr) : m_nbedges(0), m_interface(interface){ }
+        Graph (GraphInterface *interface=nullptr) : m_nbedges(0), m_interface(interface), m_cpt(0){ }
 
         void add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name="", int pic_idx=0 );
         void add_interfaced_edge(int idx, int vert1, int vert2, double weight=0);
@@ -408,6 +410,7 @@ class Graph
         void update_stepfconnexite();//Bouton F. Connexité
         void update_stepfconnexiteRAZ();//Bouton RAZ F. Connexité
         void update_stepsupprarrete();//Suppr Arrete
+        void update_stepPause();
 
         ///méthode principale
         //void displayAlleg(int path);
@@ -425,27 +428,28 @@ class Graph
 
         ///fortement connexe
         std::vector<int> uneCompoCo(int s, std::vector<std::vector<int>> matAdja);
-
-        ///FORTE CO
         void toutesLesCompo();
         void colorer();
         void reset_col();
 
         ///DYNAMIQUE
-        int calcul_K(int s);
-        int calcul_Coef(int s);
+        float calcul_K(int s);
+        float calcul_Coef(int s);
         void retrachement();
 
         ///Regroupement fct
 
         void regroup(int path);
 
+
+
+
 };
 
 
 
 /***************************************************
-                    GRAPH
+                    THING
 ****************************************************/
 
 class Thing2
